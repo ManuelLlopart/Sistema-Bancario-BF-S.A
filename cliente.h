@@ -19,4 +19,5 @@ void muestraCliente(stCliente cliente);
 
 
 
+
 #endif // CLIENTE_H_INCLUDED

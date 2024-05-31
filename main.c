@@ -9,5 +9,7 @@ int main()
     stCliente cliente;
     cliente=cargaCliente();
     muestraCliente(cliente);
+    char *prueba = validarEmail(cliente.email);
+    printf("\n %s", prueba);
     return 0;
 }

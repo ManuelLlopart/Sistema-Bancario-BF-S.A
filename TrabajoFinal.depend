@@ -16,3 +16,20 @@
 	<string.h>
 	"cliente.h"
 
+1717160528 source:c:\users\manu_\desktop\sistema bancario\main.c
+	<stdio.h>
+	<stdlib.h>
+	<conio.h>
+	<time.h>
+	<string.h>
+	"cliente.h"
+
+1717160528 c:\users\manu_\desktop\sistema bancario\cliente.h
+
+1717160585 source:c:\users\manu_\desktop\sistema bancario\cliente.c
+	<stdio.h>
+	<stdlib.h>
+	<conio.h>
+	<string.h>
+	"cliente.h"
+

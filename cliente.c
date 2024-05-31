@@ -66,4 +66,22 @@ void muestraCliente(stCliente cliente)
 
 }
 
+int validarEmail(char email[])
+{
+    char *ptr;
+    char emailValidos[4][30];
+    emailValidos[0]="@hotmail.com";
+    emailValidos[1]="@gmail.com";
+    emailValidos[2]="@yahoo.com";
+    emailValidos[3]="@hotmail.com.ar";
+
+    ptr = strchr(email, '@');
+    while(flag==0 && i<5)
+    {
+
+    }
+
+
+    return ptr;
+}
 
