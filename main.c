@@ -3,9 +3,15 @@
 #include <conio.h>
 #include <time.h>
 #include <string.h>
+#include "cliente.h"
+
+#define AR_CLIENTES "clientes.dat"
 
 int main()
 {
-    printf("Hello world!\n");
+    stCliente cliente;
+    cliente=cargaCliente();
+    muestraCliente(cliente);
+
     return 0;
 }
