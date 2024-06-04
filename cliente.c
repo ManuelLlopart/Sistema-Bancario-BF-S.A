@@ -7,6 +7,7 @@
 stCliente cargaCliente()//Falta validacion de datos, y libreria de Domicilio
 {
     int dni=0;
+    int email=0;
     stCliente cliente;
     //asignar id random a cliente
     //asignar nro random
@@ -26,11 +27,24 @@ stCliente cargaCliente()//Falta validacion de datos, y libreria de Domicilio
     {
         printf("\n dni no valido\n");
         system("pause");
+        system("cls");
     }
     }
-    printf("\n Ingrese email del cliente:");
-    fflush(stdin);
-    gets(cliente.email);
+    while(email==0)
+    {
+        printf("\n Ingrese email del cliente:");
+        fflush(stdin);
+        gets(cliente.email);
+        email=validarEmail(cliente.email);
+        if(email==0)
+        {
+            printf("\n email no valido\n");
+            system("pause");
+            system("cls");
+        }
+    }
+
+
     printf("\n Ingrese Nro de telefono del cliente: ");
     fflush(stdin);
     gets(cliente.telefono);
@@ -66,4 +80,31 @@ void muestraCliente(stCliente cliente)
 
 }
 
+int validarEmail(char email[])
+{
+    char *ptr;
+    char emailValidos[4][30];
+    int flag=0;
+    int i=0;
+    strcpy(emailValidos[0], "@gmail.com");
+    strcpy(emailValidos[1], "@hotmail.com");
+    strcpy(emailValidos[2], "@yahoo.com");
+    strcpy(emailValidos[3], "@hotmail.com.ar");
+
+    ptr = strchr(email, '@');
+    if(ptr!=NULL)
+    {
+    while(flag==0 && i<4)
+    {
+        if(strcmp(ptr, emailValidos[i])==0)
+        {
+            flag=1;
+        }
+        i++;
+    }
+    }
+
+
+    return flag;
+}
 
