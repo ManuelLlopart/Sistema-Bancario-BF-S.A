@@ -4,14 +4,20 @@
 #include <time.h>
 #include <string.h>
 #include "cliente.h"
+#include "mock.h"
 
 #define AR_CLIENTES "clientes.dat"
 
 int main()
 {
-    stCliente cliente;
-    cliente=cargaCliente();
-    muestraCliente(cliente);
+    srand(time(NULL));
+
+    stCliente a;
+    getName(a.nombre);
+    getLastName(a.apellido);
+
+    getEmailCliente(&a);
+    muestraCliente(a);
 
     return 0;
 }

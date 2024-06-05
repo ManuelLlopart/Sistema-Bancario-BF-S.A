@@ -3,13 +3,14 @@
 #include <conio.h>
 #include <string.h>
 #include "cliente.h"
+#include "mock.h"
 
-stCliente cargaCliente()//Falta validacion de datos, y libreria de Domicilio
+stCliente cargaCliente()//Falta  libreria de Domicilio
 {
     int dni=0;
     int email=0;
     stCliente cliente;
-    //asignar id random a cliente
+    //asignar id  a cliente
     //asignar nro random
     printf("\n Ingrese nombre del cliente:");
     fflush(stdin);
