@@ -13,9 +13,10 @@ char telefono[12];
 int eliminado; /// 0 si está activo - 1 si está eliminado
 }stCliente;
 
-stCliente cargaCliente();
+stCliente cargaCliente(char nombreArchivo[]);
 int validarDni(char dni[]);
 void muestraCliente(stCliente cliente);
+void listadoClientes(char nombreArchivo[]);
 
 
 

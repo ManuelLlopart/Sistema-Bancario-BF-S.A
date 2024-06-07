@@ -39,9 +39,28 @@ void getEmailCliente(stCliente* cliente)
 {
     char dominio[][30]={"@gmail.com","@hotmail.com","@yahoo.com","@hotmail.com.ar"};
     strcpy(cliente->email, cliente->nombre);
-    printf("hola");
+
     char *ptr = strcat(cliente->email, cliente->apellido);
     ptr = strcat(cliente->email, dominio[rand()%(sizeof(dominio)/30)]);
 
 
+}
+
+void getTelefonoRandom(char telefono[])
+{
+
+}
+
+void getCliente2ArchivoRandom(char nombreArchivo[])
+{
+    FILE* archi= fopen(nombreArchivo, "ab");
+    stCliente a;
+    if(archi)
+    {
+       getName(a.nombre);
+       getLastName(a.apellido);
+       getDni(a.dni);
+       getEmailCliente(&a);
+
+    }
 }
