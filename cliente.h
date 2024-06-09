@@ -7,7 +7,7 @@ int nroCliente;
 char nombre[30];
 char apellido[30];
 char dni[10];
-char email[30];
+char email[100];
 //stDomicilio domicilio;
 char telefono[12];
 int eliminado; /// 0 si está activo - 1 si está eliminado

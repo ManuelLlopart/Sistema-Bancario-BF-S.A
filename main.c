@@ -11,10 +11,11 @@
 int main()
 {
     srand(time(NULL));
+    char algo[20];
+    getTelefonoRandom(algo);
+    printf("%s \n", algo);
 
-    stCliente a;
-    a=cargaCliente(AR_CLIENTES);
-    muestraCliente(a);
+    getCliente2ArchivoRandom(AR_CLIENTES);
     printf("Listado\n");
     listadoClientes(AR_CLIENTES);
 

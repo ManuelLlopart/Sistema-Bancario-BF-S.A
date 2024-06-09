@@ -18,7 +18,7 @@
 	"cliente.h"
 	"mock.h"
 
-1717772757 source:c:\users\manu_\desktop\sistema bancario\main.c
+1717972110 source:c:\users\manu_\desktop\sistema bancario\main.c
 	<stdio.h>
 	<stdlib.h>
 	<conio.h>
@@ -27,9 +27,9 @@
 	"cliente.h"
 	"mock.h"
 
-1717772757 c:\users\manu_\desktop\sistema bancario\cliente.h
+1717973041 c:\users\manu_\desktop\sistema bancario\cliente.h
 
-1717771124 source:c:\users\manu_\desktop\sistema bancario\cliente.c
+1717772835 source:c:\users\manu_\desktop\sistema bancario\cliente.c
 	<stdio.h>
 	<stdlib.h>
 	<conio.h>
@@ -48,7 +48,7 @@
 	"cliente.h"
 	"mock.h"
 
-1717762420 source:c:\users\manu_\desktop\sistema bancario\mock.c
+1717973307 source:c:\users\manu_\desktop\sistema bancario\mock.c
 	<stdio.h>
 	<stdlib.h>
 	<conio.h>
@@ -57,5 +57,5 @@
 	"cliente.h"
 	"mock.h"
 
-1717762420 c:\users\manu_\desktop\sistema bancario\mock.h
+1717970661 c:\users\manu_\desktop\sistema bancario\mock.h
 
