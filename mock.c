@@ -12,7 +12,7 @@ void getName(char name [])
                        "Benjamin", "Selene", "Diego", "Santiago", "Gustavo", "Jorgelina", "Azul", "Leandro", "Christian", "Devora", "Laureano", "Laia", "Humberto",
                        "Sofia", "Nora", "Natalia", "Ricardo", "Lorena", "Analia", "Marisol", "Federico", "Victoria", "Ludmila", "Luz", "Catalina", "Thiago",
                        "Mateo", "Lautaro", "Martin", "Martina", "Taiel", "Natanael", "Hector", "Gabriel", "Kiara", "Dylan", "Brandon", "Eithan", "Polo", "Luciano", "Agustina",
-                       "Aylen", "Maximo", "Maximiliano", "Penelope", "Ambar", "Robert"
+                       "Aylen", "Maximo", "Maximiliano", "Penelope", "Ambar", "Robert", "Navila"
                       };
     strcpy(name,names[rand()%(sizeof(names)/30)]);
 }
@@ -22,7 +22,7 @@ void getLastName(char lastName [])
     char lastNames[][30]= {"Jurjo","Trozo","Jon","Quito","Molina", "Chavez", "Paz", "Llopart", "Gimenez", "Olivera", "Cortez", "Cheres", "Butaccio",
                            "Sanchez", "Fernandez", "Del Rio", "Del Mar", "Maglione", "Aquino", "Querales", "Libonati", "Lima", "Linares", "Garcia", "Almiron", "Costa", "Turtur", "Cepeda",
                            "Aguirre", "Perales", "Amalfitano", "Dolce", "Tusar", "Roldan", "Ochoa", "Hidalgo", "Kristiansen", "Millan", "Martinez", "Ale", "Irene", "Baden Powell", "Rios", "Vilar", "Borrel",
-                           "Luna", "Nu ez", "Bordon", "Bonilla", "Maldonado", "Ledesma", "Bravo", "Torres", "Messi", "Suarez", "Aguero", "Romero", "Barco", "Montiel", "Mcalister", "Acu a", "Armani", "Maradona", "Paez", "Paic", "Cerati",
+                           "Luna", "Nunez", "Bordon", "Bonilla", "Maldonado", "Ledesma", "Bravo", "Torres", "Messi", "Suarez", "Aguero", "Romero", "Barco", "Montiel", "Mcalister", "Acu a", "Armani", "Maradona", "Paez", "Paic", "Cerati",
                            "Espineta", "Porro", "Fazolari", "Luque", "Milei"
                           };
     strcpy(lastName, lastNames[rand()%(sizeof(lastNames)/30)]);
@@ -73,13 +73,9 @@ void getCliente2ArchivoRandom(char nombreArchivo[])
         getName(a.nombre);
         getLastName(a.apellido);
         getDni(a.dni);
-
         getTelefonoRandom(a.telefono);
-
         fseek(archi,0,SEEK_END);
-
         a.id= (ftell(archi)/sizeof(stCliente)+1);
-
         getEmailCliente(&a);
         a.eliminado = 0;
         fwrite(&a,sizeof(stCliente),1, archi);

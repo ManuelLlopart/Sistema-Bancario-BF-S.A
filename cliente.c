@@ -136,5 +136,13 @@ void listadoClientes(char nombreArchivo[])
         }
     }
 }
+void bajaCliente(stCliente a)
+{
+    a.eliminado=-1;
+}
+void altaCliente(stCliente a)
+{
+    a.eliminado=0;
+}
 
 

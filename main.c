@@ -11,9 +11,6 @@
 int main()
 {
     srand(time(NULL));
-    char algo[20];
-    getTelefonoRandom(algo);
-    printf("%s \n", algo);
 
     getCliente2ArchivoRandom(AR_CLIENTES);
     printf("Listado\n");

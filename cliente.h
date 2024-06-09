@@ -15,8 +15,10 @@ int eliminado; /// 0 si está activo - 1 si está eliminado
 
 stCliente cargaCliente(char nombreArchivo[]);
 int validarDni(char dni[]);
-void muestraCliente(stCliente cliente);
+void muestraCliente(stCliente cliente);//consulta
 void listadoClientes(char nombreArchivo[]);
+void bajaCliente(stCliente a);
+void altaCliente(stCliente a);
 
 
 
