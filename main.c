@@ -7,6 +7,7 @@
 #include "mock.h"
 
 #define AR_CLIENTES "clientes.dat"
+#define AR_CUENTAS "cuentas.dat"
 
 int main()
 {
