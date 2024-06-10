@@ -5,12 +5,16 @@
 #include "cliente.h"
 #include "mock.h"
 
-stCliente cargaCliente()//Falta  libreria de Domicilio
+stCliente cargaCliente(char nombreArchivo[])//Falta  libreria de Domicilio
 {
     int dni=0;
     int email=0;
     stCliente cliente;
-    //asignar id  a cliente
+
+    FILE* archi= fopen(nombreArchivo, "ab");
+    if(archi)
+    {
+
     //asignar nro random
     printf("\n Ingrese nombre del cliente:");
     fflush(stdin);
@@ -51,9 +55,19 @@ stCliente cargaCliente()//Falta  libreria de Domicilio
     gets(cliente.telefono);
     //cargaDomicilio(cliente);
     cliente.eliminado = 0;
-    printf("\n Carga exitosa\n");
-    system("pause");
-    system("cls");
+        fseek(archi,0,SEEK_END);
+        cliente.id= (ftell(archi)/sizeof(stCliente)+1);
+        fwrite(&cliente,sizeof(stCliente),1, archi);
+        fclose(archi);
+        printf("\n Carga exitosa\n");
+        system("pause");
+        system("cls");
+    }else
+    {
+        printf("error al abrir archivo");
+    }
+
+
     return cliente;
 }
 
@@ -108,4 +122,27 @@ int validarEmail(char email[])
 
     return flag;
 }
+
+void listadoClientes(char nombreArchivo[])
+{
+    FILE* archi = fopen(nombreArchivo, "rb");
+    stCliente a;
+    if(archi)
+    {
+        while(fread(&a,sizeof(stCliente),1, archi))
+        {
+            muestraCliente(a);
+            printf("\n ===========================\n");
+        }
+    }
+}
+void bajaCliente(stCliente a)
+{
+    a.eliminado=-1;
+}
+void altaCliente(stCliente a)
+{
+    a.eliminado=0;
+}
+
 

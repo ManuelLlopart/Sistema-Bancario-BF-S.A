@@ -5,6 +5,8 @@ void getName(char name []);
 void getLastName(char lastName []);
 void getDni(char dni[]);
 void getEmailCliente(stCliente* cliente);
+void getTelefonoRandom(char telefono[]);
+void getCliente2ArchivoRandom(char nombreArchivo[]);
 
 
 

@@ -12,12 +12,9 @@ int main()
 {
     srand(time(NULL));
 
-    stCliente a;
-    getName(a.nombre);
-    getLastName(a.apellido);
-
-    getEmailCliente(&a);
-    muestraCliente(a);
+    getCliente2ArchivoRandom(AR_CLIENTES);
+    printf("Listado\n");
+    listadoClientes(AR_CLIENTES);
 
     return 0;
 }
