@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1718065080 source:c:\users\pc\desktop\trabajo final\cliente.c
+1718148400 source:c:\users\pc\desktop\trabajo final\cliente.c
 	<stdio.h>
 	<stdlib.h>
 	<conio.h>
@@ -7,9 +7,9 @@
 	"cliente.h"
 	"mock.h"
 
-1718065070 c:\users\pc\desktop\trabajo final\cliente.h
+1718149008 c:\users\pc\desktop\trabajo final\cliente.h
 
-1718065258 source:c:\users\pc\desktop\trabajo final\main.c
+1718148450 source:c:\users\pc\desktop\trabajo final\main.c
 	<stdio.h>
 	<stdlib.h>
 	<conio.h>
@@ -39,7 +39,7 @@
 
 1718061168 c:\users\pc\desktop\trabajo final\mock.h
 
-1718061168 source:c:\users\pc\desktop\trabajo final\mock.c
+1718140427 source:c:\users\pc\desktop\trabajo final\mock.c
 	<stdio.h>
 	<stdlib.h>
 	<conio.h>

@@ -15,54 +15,56 @@ stCliente cargaCliente(char nombreArchivo[])//Falta  libreria de Domicilio
     if(archi)
     {
 
-    //asignar nro random
-    printf("\n Ingrese nombre del cliente:");
-    fflush(stdin);
-    gets(cliente.nombre);
-    printf("\n Ingrese apellido del cliente:");
-    fflush(stdin);
-    gets(cliente.apellido);
-    while(dni==0)
-    {
-    printf("\n Ingrese dni del cliente:");
-    fflush(stdin);
-    gets(cliente.dni);
-    dni=validarDni(cliente.dni);
-    if(dni==0)
-    {
-        printf("\n dni no valido\n");
-        system("pause");
-        system("cls");
-    }
-    }
-    while(email==0)
-    {
-        printf("\n Ingrese email del cliente:");
+
+        printf("\n Ingrese nombre del cliente:");
         fflush(stdin);
-        gets(cliente.email);
-        email=validarEmail(cliente.email);
-        if(email==0)
+        gets(cliente.nombre);
+        printf("\n Ingrese apellido del cliente:");
+        fflush(stdin);
+        gets(cliente.apellido);
+        while(dni==0)
         {
-            printf("\n email no valido\n");
-            system("pause");
-            system("cls");
+            printf("\n Ingrese dni del cliente:");
+            fflush(stdin);
+            gets(cliente.dni);
+            dni=validarDni(cliente.dni);
+            if(dni==0)
+            {
+                printf("\n dni no valido\n");
+                system("pause");
+                system("cls");
+            }
         }
-    }
+        while(email==0)
+        {
+            printf("\n Ingrese email del cliente:");
+            fflush(stdin);
+            gets(cliente.email);
+            email=validarEmail(cliente.email);
+            if(email==0)
+            {
+                printf("\n email no valido\n");
+                system("pause");
+                system("cls");
+            }
+        }
 
 
-    printf("\n Ingrese Nro de telefono del cliente: ");
-    fflush(stdin);
-    gets(cliente.telefono);
-    //cargaDomicilio(cliente);
-    cliente.eliminado = 0;
+        printf("\n Ingrese Nro de telefono del cliente: ");
+        fflush(stdin);
+        gets(cliente.telefono);
+        //cargaDomicilio(cliente);
+        cliente.eliminado = 0;
         fseek(archi,0,SEEK_END);
         cliente.id= (ftell(archi)/sizeof(stCliente)+1);
+        cliente.nroCliente=cliente.id;
         fwrite(&cliente,sizeof(stCliente),1, archi);
         fclose(archi);
         printf("\n Carga exitosa\n");
         system("pause");
         system("cls");
-    }else
+    }
+    else
     {
         printf("error al abrir archivo");
     }
@@ -109,14 +111,14 @@ int validarEmail(char email[])
     ptr = strchr(email, '@');
     if(ptr!=NULL)
     {
-    while(flag==0 && i<4)
-    {
-        if(strcmp(ptr, emailValidos[i])==0)
+        while(flag==0 && i<4)
         {
-            flag=1;
+            if(strcmp(ptr, emailValidos[i])==0)
+            {
+                flag=1;
+            }
+            i++;
         }
-        i++;
-    }
     }
 
 
@@ -129,7 +131,7 @@ void listadoClientes(char nombreArchivo[])
     stCliente a;
     if(archi)
     {
-        while(fread(&a,sizeof(stCliente),1, archi))
+        while(fread(&a,sizeof(stCliente),1, archi)>0)
         {
             muestraCliente(a);
             printf("\n ===========================\n");
@@ -145,33 +147,85 @@ void altaCliente(stCliente a)
     a.eliminado=0;
 }
 
-stCliente buscaClientePorId(char nombreArchivo[], int idBuscado)
+
+
+
+int buscaPosClientePorDni(char nombreArchivo[], char dniBuscado[])
 {
-    FILE* archi = fopen(nombreArchivo, "r+b");
+    int pos = -1;
+    FILE* archi = fopen(nombreArchivo, "rb");
+    stCliente a;
     int flag = 0;
+    if(archi)
+    {
+        while(flag==0 && fread(&a, sizeof(stCliente),1, archi)>0)
+        {
+
+            if(strcmp(dniBuscado, a.dni)==0)
+            {
+                flag=1;
+                pos=ftell(archi)/sizeof(stCliente)-1;
+            }
+        }
+        fclose(archi);
+    }
+
+
+    return pos;
+}
+
+void muestraClientePos(char nombreArchivo[], int pos)
+{
+    stCliente a;
+    if(pos <= cuentaCantidadClientes(nombreArchivo))
+    {
+        FILE* archi =  fopen(nombreArchivo, "rb");
+        if(archi)
+        {
+            fseek(archi, pos*sizeof(stCliente),SEEK_SET);
+            fread(&a, sizeof(stCliente),1, archi);
+            muestraCliente(a);
+            fclose(archi);
+        }
+    }
+}
+
+int cuentaCantidadClientes(char nombreArchivo[])
+{
+    int pos=0;
+    stCliente a;
+    FILE* archi = fopen(nombreArchivo, "rb");
+    if(archi)
+    {
+        while(fread(&a, sizeof(stCliente), 1, archi))
+        {
+            pos++;
+        }
+    }
+    return pos;
+}
+
+int buscaPosClientePorId(char nombreArchivo[], int idBuscado)
+{
+    FILE* archi = fopen(nombreArchivo, "rb");
+    int flag = 0;
+    int pos = 0;
     stCliente a;
     if(archi)
     {
-        while(flag==0 && fread(&a, sizeof(stCliente),1, archi))
+        while(flag==0 && fread(&a, sizeof(stCliente),1, archi)>0)
         {
             if(a.id==idBuscado)
             {
                 flag=1;
+                pos=ftell(archi)/sizeof(stCliente)-1;
             }
 
         }
         fclose(archi);
     }
-    if(flag==0)
-    {
-        strcpy(a.nombre, "No existe");
-        strcpy(a.apellido, "---------");
-        strcpy(a.dni, "---------");
-        strcpy(a.telefono, "---------");
-        strcpy(a.email, "---------");
-        a.id=idBuscado;
-        a.eliminado=-1;
-        a.nroCliente=0;
-    }
-    return a;
+
+    return pos;
 }
+
+
