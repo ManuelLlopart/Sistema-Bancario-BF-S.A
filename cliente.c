@@ -145,4 +145,33 @@ void altaCliente(stCliente a)
     a.eliminado=0;
 }
 
+stCliente buscaClientePorId(char nombreArchivo[], int idBuscado)
+{
+    FILE* archi = fopen(nombreArchivo, "r+b");
+    int flag = 0;
+    stCliente a;
+    if(archi)
+    {
+        while(flag==0 && fread(&a, sizeof(stCliente),1, archi))
+        {
+            if(a.id==idBuscado)
+            {
+                flag=1;
+            }
 
+        }
+        fclose(archi);
+    }
+    if(flag==0)
+    {
+        strcpy(a.nombre, "No existe");
+        strcpy(a.apellido, "---------");
+        strcpy(a.dni, "---------");
+        strcpy(a.telefono, "---------");
+        strcpy(a.email, "---------");
+        a.id=idBuscado;
+        a.eliminado=-1;
+        a.nroCliente=0;
+    }
+    return a;
+}

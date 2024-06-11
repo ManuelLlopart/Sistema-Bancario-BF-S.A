@@ -19,6 +19,8 @@ void muestraCliente(stCliente cliente);//consulta
 void listadoClientes(char nombreArchivo[]);
 void bajaCliente(stCliente a);
 void altaCliente(stCliente a);
+stCliente buscaClientePorId(char nombreArchivo[], int idBuscado);
+
 
 
 
