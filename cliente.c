@@ -228,4 +228,68 @@ int buscaPosClientePorId(char nombreArchivo[], int idBuscado)
     return pos;
 }
 
+int menuModif()
+{
+    int opcion;
+    printf("\n Ingrese 1 para cambiar nombre");
+    printf("\n Ingrese 2 para cambiar apellido");
+    printf("\n Ingrese 3 para cambiar dni");
+    printf("\n Ingrese 4 para cambiar email");
+    printf("\n Ingrese 5 para cambiar telefono");
+    printf("\n Ingrese 6 para cambiar domicilio");
+    printf("\n Escape para salir")
+    opcion=getch();
+    system("cls");
+    return opcion;
+}
 
+stCliente modificarCliente(stCliente a)
+{
+    int opcion=menuModif();
+    int dni=0;
+    do
+    {
+        switch(opcion)
+    {
+    case 1:
+        printf("\nIngrese nuevo nombre:\n");
+        gets(a.nombre);
+        break;
+    case 2:
+        printf("\nIngrese nuevo apellido:\n");
+        gets(a.nombre);
+        break;
+    case 3:
+        while(dni==0)
+        {
+        printf("\nIngrese nuevo dni:\n");
+        gets(a.dni);
+        dni=validarDni(a.dni);
+            if(dni==0)
+            {
+                printf("\n dni no valido\n");
+                system("pause");
+                system("cls");
+            }
+        }
+        break;
+    case 4:
+        do{
+        printf("\nIngrese nuevo email:\n");
+        gets(a.nombre);
+        }while()
+        break;
+    case 5:
+        break;
+    case 6:
+        break;
+
+    default:
+        printf("\nOpcion no valida");
+        break;
+
+    }
+    }while(opcion != 27);
+
+    return a;
+}

@@ -1,3 +1,9 @@
 Problema= Validar emails
 
 Solucion= Usar la función strchr la cual busca un carácter ingresado por parámetro, y devuelve la dirección de memoria a partir de ese carácter, en caso de no encontrarlo devuelve NULL, a partir de ahí comparo lo que sigue del @ si es que esta y si coincide con algún email valido
+
+Problema = generar emails randoms
+
+Solución = Usar la función strcat y unir nombre, apellidos, id y un dominio
+
+Problema

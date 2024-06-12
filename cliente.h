@@ -23,6 +23,7 @@ int buscaPosClientePorDni(char nombreArchivo[], char dniBuscado[]);
 int cuentaCantidadClientes(char nombreArchivo[]);
 int buscaPosClientePorId(char nombreArchivo[], int idBuscado);
 void muestraClientePos(char nombreArchivo[], int pos);
+stCliente modificarCliente(stCliente a);
 
 
 
