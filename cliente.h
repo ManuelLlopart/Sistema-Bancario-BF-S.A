@@ -27,6 +27,7 @@ stCliente modificarCliente(stCliente a);//menu para que modifique el usuario un 
 int menuModif();//visualizacion de menu de modificacion de cliente
 void reemplazaClientePos(char nombreArchivo[],stCliente a, int pos);
 stCliente clientePos(char nombreArchivo[], int pos);//retorna el cliente de esa posicion
+int validarTelefono(char telefono[])//Valida si el telefono tiene entre 9 y 10 caracteres
 
 
 

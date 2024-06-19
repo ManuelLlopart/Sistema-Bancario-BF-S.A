@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1718831366 source:c:\users\pc\desktop\trabajo final\cliente.c
+1718835203 source:c:\users\pc\desktop\trabajo final\cliente.c
 	<stdio.h>
 	<stdlib.h>
 	<conio.h>
@@ -9,7 +9,7 @@
 
 1718832934 c:\users\pc\desktop\trabajo final\cliente.h
 
-1718832934 source:c:\users\pc\desktop\trabajo final\main.c
+1718833671 source:c:\users\pc\desktop\trabajo final\main.c
 	<stdio.h>
 	<stdlib.h>
 	<conio.h>

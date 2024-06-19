@@ -20,8 +20,7 @@ int main()
     printf("\n ingrese el pos del cliente que desea buscar:");
     scanf("%d", &pos);
     muestraCliente(clientePos(AR_CLIENTES, pos));
-
-
+    reemplazaClientePos(AR_CLIENTES,modificarCliente(clientePos(AR_CLIENTES, pos)),pos);
 
     return 0;
 }

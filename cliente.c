@@ -12,6 +12,7 @@ stCliente cargaCliente(char nombreArchivo[])//Falta  libreria de Domicilio
     int dni=0;
     int email=0;
     stCliente cliente;
+    int telefono=0;
 
     FILE* archi= fopen(nombreArchivo, "ab");
     if(archi)
@@ -52,9 +53,20 @@ stCliente cargaCliente(char nombreArchivo[])//Falta  libreria de Domicilio
         }
 
 
+        while(telefono==0)
+        {
         printf("\n Ingrese Nro de telefono del cliente: ");
         fflush(stdin);
         gets(cliente.telefono);
+        if(validarTelefono(cliente.telefono))
+        {
+            telefono=1;
+        }else
+        {
+            printf("\n Numero no valido, intente nuevamente");
+            system("pause");
+        }
+        }
         //cargaDomicilio(cliente);
         cliente.eliminado = 0;
         fseek(archi,0,SEEK_END);
@@ -84,6 +96,15 @@ int validarDni(char dni[])
     return flag;
 }
 
+int validarTelefono(char telefono[])
+{
+    int flag=0;
+    int cantCaract = strlen(telefono);//evito abrir la funcion 2 veces
+    flag=(cantCaract<11&&cantCaract>8);
+
+    return flag;
+}
+
 void muestraCliente(stCliente cliente)
 {
     char estado[10];
@@ -94,7 +115,7 @@ void muestraCliente(stCliente cliente)
     printf("\n Nro de telefono:....... %s", cliente.telefono);
     printf("\n Nro de DNI:............ %s", cliente.dni);
     printf("\n Email:................. %s", cliente.email);
-    (cliente.eliminado==0)?strcpy(estado, "Activo"):strcpy(estado, "Eliminado");
+    (cliente.eliminado==0)?strcpy(estado, "Activo"):strcpy(estado, "Eliminado");//ternario
     printf("\n Estado de cliente:..... %s", estado);
 
 }
@@ -144,13 +165,13 @@ void bajaCliente(stCliente *a)
 {
     if(a->eliminado==1)
         {
-            printf("\n Error \n El Cliente ya se encuentra dado de baja");
+            printf("\n Error \n El Cliente ya se encuentra dado de baja\n");
             system("pause");
         }
         else
         {
             a->eliminado=-1;
-            printf("\n Cliente dado de baja");
+            printf("\n Cliente dado de baja\n");
             system("pause");
         }
 }
@@ -158,13 +179,13 @@ void altaCliente(stCliente *a)
 {
     if(a->eliminado==0)
         {
-            printf("\n Error \n El Cliente ya se encuentra dado de alta");
+            printf("\n Error \n El Cliente ya se encuentra dado de alta\n");
             system("pause");
         }
         else
         {
             a->eliminado=0;
-            printf("\n Cliente dado de alta");
+            printf("\n Cliente dado de alta\n");
             system("pause");
         }
 }
@@ -261,36 +282,40 @@ int menuModif()
     printf("\n Ingrese 6 para cambiar domicilio");
     printf("\n Ingrese 7 para dar de baja al cliente");
     printf("\n Ingrese 8 para dar de alta al cliente");
-    printf("\n Escape para salir");
-    opcion=getch();
+    printf("\n Escape para salir\n");
+    fflush(stdin);
+    opcion=getche();
     system("cls");
     return opcion;
 }
 
 stCliente modificarCliente(stCliente a)
 {
-    int opcion=menuModif();
+
     int dni=0;
     int email=0;
+    int opcion;
     do
     {
+        opcion=menuModif();
+
         switch(opcion)
     {
-    case 1:
+    case 49:
         printf("\nIngrese nuevo nombre:\n");
         fflush(stdin);
         gets(a.nombre);
         printf("\n Nombre actualizado correctamente");
         system("pause");
         break;
-    case 2:
+    case 50:
         printf("\nIngrese nuevo apellido:\n");
         fflush(stdin);
         gets(a.apellido);
         printf("\n Apellido actualizado correctamente");
         system("pause");
         break;
-    case 3:
+    case 51:
         while(dni==0)
         {
         printf("\nIngrese nuevo dni:\n");
@@ -307,7 +332,7 @@ stCliente modificarCliente(stCliente a)
         printf("\n Dni actualizado correctamente");
         system("pause");
         break;
-    case 4:
+    case 52:
          while(email==0)
         {
             printf("\n Ingrese nuevo email del cliente:");
@@ -324,23 +349,35 @@ stCliente modificarCliente(stCliente a)
         printf("\n Email actualizado correctamente");
         system("pause");
         break;
-    case 5:
-         printf("\n Ingrese nuevo Nro de telefono del cliente: ");
+    case 53:
+         while(telefono==0)
+        {
+        printf("\n Ingrese nuevo Nro de telefono del cliente: ");
         fflush(stdin);
         gets(a.telefono);
-        printf("\n Telefono actualizado correctamente");
-        system("pause");
+        if(validarTelefono(a.telefono))
+        {
+            telefono=1;
+        }else
+        {
+            printf("\n Numero no valido, intente nuevamente\n");
+            system("pause");
+        }
         break;
-    case 6://stDomicilio
+    case 54://stDomicilio
         break;
-    case 7:
+    case 55:
         bajaCliente(&a);
         break;
-    case 8:
+    case 56:
         altaCliente(&a);
         break;
+    case 27:
+        printf("\n Saliendo de modificacion\n");
+        system("pause");
+        break;
     default:
-        printf("\nOpcion no valida");
+        printf("\nOpcion no valida\n");
         system("pause");
         break;
 
@@ -356,7 +393,7 @@ void reemplazaClientePos(char nombreArchivo[],stCliente a, int pos)
     FILE* archi=fopen(nombreArchivo, "r+b");
     if(archi)
     {
-        fseek(archi,pos*sizeof(stCliente), SEEK_SET);
+        fseek(archi,(pos-1)*sizeof(stCliente), SEEK_SET);
         fwrite(&a,sizeof(stCliente),1, archi);
         fclose(archi);
     }
