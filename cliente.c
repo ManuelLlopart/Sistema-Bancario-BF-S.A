@@ -5,6 +5,8 @@
 #include "cliente.h"
 #include "mock.h"
 
+
+
 stCliente cargaCliente(char nombreArchivo[])//Falta  libreria de Domicilio
 {
     int dni=0;
@@ -349,7 +351,26 @@ stCliente modificarCliente(stCliente a)
 }
 
 
-void reemplazaClientePos(stCliente a, char nombreArchivo)
+void reemplazaClientePos(char nombreArchivo[],stCliente a, int pos)
 {
+    FILE* archi=fopen(nombreArchivo, "r+b");
+    if(archi)
+    {
+        fseek(archi,pos*sizeof(stCliente), SEEK_SET);
+        fwrite(&a,sizeof(stCliente),1, archi);
+        fclose(archi);
+    }
+}
 
+stCliente clientePos(char nombreArchivo[], int pos)
+{
+    FILE* archi=fopen(nombreArchivo, "rb");
+    stCliente a;
+    if(archi)
+    {
+        fseek(archi,(pos-1)*sizeof(stCliente), SEEK_SET);
+        fread(&a,sizeof(stCliente),1,archi);
+        fclose(archi);
+    }
+    return a;
 }

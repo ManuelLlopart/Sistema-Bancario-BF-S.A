@@ -12,12 +12,15 @@
 int main()
 {
     srand(time(NULL));
-
+    int pos=0;
 
     getCliente2ArchivoRandom(AR_CLIENTES);
     printf("Listado\n");
     listadoClientes(AR_CLIENTES);
-    printf("\n ingrese el id del cliente que desea buscar:");
+    printf("\n ingrese el pos del cliente que desea buscar:");
+    scanf("%d", &pos);
+    muestraCliente(clientePos(AR_CLIENTES, pos));
+
 
 
     return 0;

@@ -25,6 +25,9 @@ int buscaPosClientePorId(char nombreArchivo[], int idBuscado);//devuelve la posi
 void muestraClientePos(char nombreArchivo[], int pos);//Muestra un cliente buscado por posicion
 stCliente modificarCliente(stCliente a);//menu para que modifique el usuario un cliente
 int menuModif();//visualizacion de menu de modificacion de cliente
+void reemplazaClientePos(char nombreArchivo[],stCliente a, int pos);
+stCliente clientePos(char nombreArchivo[], int pos);//retorna el cliente de esa posicion
+
 
 
 
