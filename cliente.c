@@ -237,6 +237,8 @@ int menuModif()
     printf("\n Ingrese 4 para cambiar email");
     printf("\n Ingrese 5 para cambiar telefono");
     printf("\n Ingrese 6 para cambiar domicilio");
+    printf("\n Ingrese 7 para dar de baja al cliente");
+    printf("\n Ingrese 8 para dar de alta al cliente");
     printf("\n Escape para salir")
     opcion=getch();
     system("cls");
@@ -247,22 +249,30 @@ stCliente modificarCliente(stCliente a)
 {
     int opcion=menuModif();
     int dni=0;
+    int email=0;
     do
     {
         switch(opcion)
     {
     case 1:
         printf("\nIngrese nuevo nombre:\n");
+        fflush(stdin);
         gets(a.nombre);
+        printf("\n Nombre actualizado correctamente");
+        system("pause");
         break;
     case 2:
         printf("\nIngrese nuevo apellido:\n");
-        gets(a.nombre);
+        fflush(stdin);
+        gets(a.apellido);
+        printf("\n Apellido actualizado correctamente");
+        system("pause");
         break;
     case 3:
         while(dni==0)
         {
         printf("\nIngrese nuevo dni:\n");
+        fflush(stdin);
         gets(a.dni);
         dni=validarDni(a.dni);
             if(dni==0)
@@ -272,20 +282,53 @@ stCliente modificarCliente(stCliente a)
                 system("cls");
             }
         }
+        printf("\n Dni actualizado correctamente");
+        system("pause");
         break;
     case 4:
-        do{
-        printf("\nIngrese nuevo email:\n");
-        gets(a.nombre);
-        }while()
+         while(email==0)
+        {
+            printf("\n Ingrese nuevo email del cliente:");
+            fflush(stdin);
+            gets(a.email);
+            email=validarEmail(a.email);
+            if(email==0)
+            {
+                printf("\n email no valido\n");
+                system("pause");
+                system("cls");
+            }
+        }
+        printf("\n Email actualizado correctamente");
+        system("pause");
         break;
     case 5:
+         printf("\n Ingrese nuevo Nro de telefono del cliente: ");
+        fflush(stdin);
+        gets(a.telefono);
+        printf("\n Telefono actualizado correctamente");
+        system("pause");
         break;
-    case 6:
+    case 6://stDomicilio
         break;
-
+    case 7:
+        if(a.eliminado==1)
+        {
+            printf("\n Error \n El Cliente ya se encuentra dado de baja");
+            system("pause");
+        }
+        else
+        {
+            a.eliminado=-1;
+            printf("\n Cliente dado de baja");
+            system("pause");
+        }
+        break;
+    case 8:
+        break;
     default:
         printf("\nOpcion no valida");
+        system("pause");
         break;
 
     }
