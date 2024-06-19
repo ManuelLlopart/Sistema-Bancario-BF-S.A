@@ -15,54 +15,56 @@ stCliente cargaCliente(char nombreArchivo[])//Falta  libreria de Domicilio
     if(archi)
     {
 
-    //asignar nro random
-    printf("\n Ingrese nombre del cliente:");
-    fflush(stdin);
-    gets(cliente.nombre);
-    printf("\n Ingrese apellido del cliente:");
-    fflush(stdin);
-    gets(cliente.apellido);
-    while(dni==0)
-    {
-    printf("\n Ingrese dni del cliente:");
-    fflush(stdin);
-    gets(cliente.dni);
-    dni=validarDni(cliente.dni);
-    if(dni==0)
-    {
-        printf("\n dni no valido\n");
-        system("pause");
-        system("cls");
-    }
-    }
-    while(email==0)
-    {
-        printf("\n Ingrese email del cliente:");
+
+        printf("\n Ingrese nombre del cliente:");
         fflush(stdin);
-        gets(cliente.email);
-        email=validarEmail(cliente.email);
-        if(email==0)
+        gets(cliente.nombre);
+        printf("\n Ingrese apellido del cliente:");
+        fflush(stdin);
+        gets(cliente.apellido);
+        while(dni==0)
         {
-            printf("\n email no valido\n");
-            system("pause");
-            system("cls");
+            printf("\n Ingrese dni del cliente:");
+            fflush(stdin);
+            gets(cliente.dni);
+            dni=validarDni(cliente.dni);
+            if(dni==0)
+            {
+                printf("\n dni no valido\n");
+                system("pause");
+                system("cls");
+            }
         }
-    }
+        while(email==0)
+        {
+            printf("\n Ingrese email del cliente:");
+            fflush(stdin);
+            gets(cliente.email);
+            email=validarEmail(cliente.email);
+            if(email==0)
+            {
+                printf("\n email no valido\n");
+                system("pause");
+                system("cls");
+            }
+        }
 
 
-    printf("\n Ingrese Nro de telefono del cliente: ");
-    fflush(stdin);
-    gets(cliente.telefono);
-    //cargaDomicilio(cliente);
-    cliente.eliminado = 0;
+        printf("\n Ingrese Nro de telefono del cliente: ");
+        fflush(stdin);
+        gets(cliente.telefono);
+        //cargaDomicilio(cliente);
+        cliente.eliminado = 0;
         fseek(archi,0,SEEK_END);
         cliente.id= (ftell(archi)/sizeof(stCliente)+1);
+        cliente.nroCliente=cliente.id;
         fwrite(&cliente,sizeof(stCliente),1, archi);
         fclose(archi);
         printf("\n Carga exitosa\n");
         system("pause");
         system("cls");
-    }else
+    }
+    else
     {
         printf("error al abrir archivo");
     }
@@ -109,14 +111,14 @@ int validarEmail(char email[])
     ptr = strchr(email, '@');
     if(ptr!=NULL)
     {
-    while(flag==0 && i<4)
-    {
-        if(strcmp(ptr, emailValidos[i])==0)
+        while(flag==0 && i<4)
         {
-            flag=1;
+            if(strcmp(ptr, emailValidos[i])==0)
+            {
+                flag=1;
+            }
+            i++;
         }
-        i++;
-    }
     }
 
 
@@ -129,7 +131,7 @@ void listadoClientes(char nombreArchivo[])
     stCliente a;
     if(archi)
     {
-        while(fread(&a,sizeof(stCliente),1, archi))
+        while(fread(&a,sizeof(stCliente),1, archi)>0)
         {
             muestraCliente(a);
             printf("\n ===========================\n");
@@ -146,3 +148,148 @@ void altaCliente(stCliente a)
 }
 
 
+
+
+int buscaPosClientePorDni(char nombreArchivo[], char dniBuscado[])
+{
+    int pos = -1;
+    FILE* archi = fopen(nombreArchivo, "rb");
+    stCliente a;
+    int flag = 0;
+    if(archi)
+    {
+        while(flag==0 && fread(&a, sizeof(stCliente),1, archi)>0)
+        {
+
+            if(strcmp(dniBuscado, a.dni)==0)
+            {
+                flag=1;
+                pos=ftell(archi)/sizeof(stCliente)-1;
+            }
+        }
+        fclose(archi);
+    }
+
+
+    return pos;
+}
+
+void muestraClientePos(char nombreArchivo[], int pos)
+{
+    stCliente a;
+    if(pos <= cuentaCantidadClientes(nombreArchivo))
+    {
+        FILE* archi =  fopen(nombreArchivo, "rb");
+        if(archi)
+        {
+            fseek(archi, pos*sizeof(stCliente),SEEK_SET);
+            fread(&a, sizeof(stCliente),1, archi);
+            muestraCliente(a);
+            fclose(archi);
+        }
+    }
+}
+
+int cuentaCantidadClientes(char nombreArchivo[])
+{
+    int pos=0;
+    stCliente a;
+    FILE* archi = fopen(nombreArchivo, "rb");
+    if(archi)
+    {
+        while(fread(&a, sizeof(stCliente), 1, archi))
+        {
+            pos++;
+        }
+    }
+    return pos;
+}
+
+int buscaPosClientePorId(char nombreArchivo[], int idBuscado)
+{
+    FILE* archi = fopen(nombreArchivo, "rb");
+    int flag = 0;
+    int pos = 0;
+    stCliente a;
+    if(archi)
+    {
+        while(flag==0 && fread(&a, sizeof(stCliente),1, archi)>0)
+        {
+            if(a.id==idBuscado)
+            {
+                flag=1;
+                pos=ftell(archi)/sizeof(stCliente)-1;
+            }
+
+        }
+        fclose(archi);
+    }
+
+    return pos;
+}
+
+int menuModif()
+{
+    int opcion;
+    printf("\n Ingrese 1 para cambiar nombre");
+    printf("\n Ingrese 2 para cambiar apellido");
+    printf("\n Ingrese 3 para cambiar dni");
+    printf("\n Ingrese 4 para cambiar email");
+    printf("\n Ingrese 5 para cambiar telefono");
+    printf("\n Ingrese 6 para cambiar domicilio");
+    printf("\n Escape para salir")
+    opcion=getch();
+    system("cls");
+    return opcion;
+}
+
+stCliente modificarCliente(stCliente a)
+{
+    int opcion=menuModif();
+    int dni=0;
+    do
+    {
+        switch(opcion)
+    {
+    case 1:
+        printf("\nIngrese nuevo nombre:\n");
+        gets(a.nombre);
+        break;
+    case 2:
+        printf("\nIngrese nuevo apellido:\n");
+        gets(a.nombre);
+        break;
+    case 3:
+        while(dni==0)
+        {
+        printf("\nIngrese nuevo dni:\n");
+        gets(a.dni);
+        dni=validarDni(a.dni);
+            if(dni==0)
+            {
+                printf("\n dni no valido\n");
+                system("pause");
+                system("cls");
+            }
+        }
+        break;
+    case 4:
+        do{
+        printf("\nIngrese nuevo email:\n");
+        gets(a.nombre);
+        }while()
+        break;
+    case 5:
+        break;
+    case 6:
+        break;
+
+    default:
+        printf("\nOpcion no valida");
+        break;
+
+    }
+    }while(opcion != 27);
+
+    return a;
+}

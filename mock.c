@@ -78,6 +78,7 @@ void getCliente2ArchivoRandom(char nombreArchivo[])
         a.id= (ftell(archi)/sizeof(stCliente)+1);
         getEmailCliente(&a);
         a.eliminado = 0;
+        a.nroCliente=a.id;
         fwrite(&a,sizeof(stCliente),1, archi);
 
 
