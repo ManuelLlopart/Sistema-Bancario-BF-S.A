@@ -138,13 +138,33 @@ void listadoClientes(char nombreArchivo[])
         }
     }
 }
-void bajaCliente(stCliente a)
+void bajaCliente(stCliente *a)
 {
-    a.eliminado=-1;
+    if(a->eliminado==1)
+        {
+            printf("\n Error \n El Cliente ya se encuentra dado de baja");
+            system("pause");
+        }
+        else
+        {
+            a->eliminado=-1;
+            printf("\n Cliente dado de baja");
+            system("pause");
+        }
 }
-void altaCliente(stCliente a)
+void altaCliente(stCliente *a)
 {
-    a.eliminado=0;
+    if(a->eliminado==0)
+        {
+            printf("\n Error \n El Cliente ya se encuentra dado de alta");
+            system("pause");
+        }
+        else
+        {
+            a->eliminado=0;
+            printf("\n Cliente dado de alta");
+            system("pause");
+        }
 }
 
 
@@ -239,7 +259,7 @@ int menuModif()
     printf("\n Ingrese 6 para cambiar domicilio");
     printf("\n Ingrese 7 para dar de baja al cliente");
     printf("\n Ingrese 8 para dar de alta al cliente");
-    printf("\n Escape para salir")
+    printf("\n Escape para salir");
     opcion=getch();
     system("cls");
     return opcion;
@@ -312,19 +332,10 @@ stCliente modificarCliente(stCliente a)
     case 6://stDomicilio
         break;
     case 7:
-        if(a.eliminado==1)
-        {
-            printf("\n Error \n El Cliente ya se encuentra dado de baja");
-            system("pause");
-        }
-        else
-        {
-            a.eliminado=-1;
-            printf("\n Cliente dado de baja");
-            system("pause");
-        }
+        bajaCliente(&a);
         break;
     case 8:
+        altaCliente(&a);
         break;
     default:
         printf("\nOpcion no valida");
@@ -335,4 +346,10 @@ stCliente modificarCliente(stCliente a)
     }while(opcion != 27);
 
     return a;
+}
+
+
+void reemplazaClientePos(stCliente a, char nombreArchivo)
+{
+
 }
