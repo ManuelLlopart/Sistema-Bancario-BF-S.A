@@ -125,3 +125,7 @@ void modificacion_cuenta (stCuenta cuenta[], int CantidadCuentas,int BuscarId)
         }
     }
 }
+
+
+
+

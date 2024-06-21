@@ -295,6 +295,7 @@ stCliente modificarCliente(stCliente a)
     int dni=0;
     int email=0;
     int opcion;
+    int telefono=0;
     do
     {
         opcion=menuModif();
@@ -363,6 +364,7 @@ stCliente modificarCliente(stCliente a)
             printf("\n Numero no valido, intente nuevamente\n");
             system("pause");
         }
+        }
         break;
     case 54://stDomicilio
         break;
@@ -410,4 +412,11 @@ stCliente clientePos(char nombreArchivo[], int pos)
         fclose(archi);
     }
     return a;
+}
+
+
+int getIdCliente(stCliente a)
+{
+    int id=a.id;
+    return id;
 }
