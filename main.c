@@ -10,7 +10,12 @@
 #define AR_CLIENTES "clientes.dat"
 #define AR_CUENTAS "cuentas.dat"
 
-void menuPpal();
+int menuPpal();
+int menuCliente();
+int menuBuscaCliente();
+void opcionesCliente();
+
+
 int selectOption(int cantOpciones);
 
 
@@ -18,10 +23,27 @@ int main()
 {
     srand(time(NULL));
 
-    //getCliente2ArchivoRandom(AR_CLIENTES);
-//    printf("Listado\n");
-//    listadoClientes(AR_CLIENTES);
-    menuPpal();
+    int opcion;
+    int fin=0;
+    do
+    {
+        opcion=menuPpal();
+        switch(opcion)
+        {
+        case 1://cliente
+            opcionesCliente();
+
+            break;
+        case 2://cuenta
+
+            break;
+        case 3://salir
+            fin=1;
+            break;
+
+        }
+    }while(fin==0);
+
 
 
 
@@ -30,8 +52,9 @@ int main()
 }
 
 
-void menuPpal()
+int menuPpal()
 {
+    system("cls");
     color(6);
     int x;
     int y;
@@ -55,39 +78,17 @@ void menuPpal()
     gotoxy(x,y);
     printf("SALIR");
     op=selectOption(3);
-    printf("\n La opcion es %d", op);
+    return op;
 }
 
-int selectMenuPpal()
-{
-    int opcion=0;
-    int x;
-    int y;
-
-    getConsoleSize(&x, &y);
-    y=3;
-    x=x-18;
-    gotoxy(x,y);
-
-//    do
-//    {
-//        switch(opcion)
-//        {
-//
-//        }
-//    }while();
 
 
-    return opcion;
-}
-
-int selectOption(int cantOpciones)
+int selectOption(int cantOpciones)//Devuelve una opcion elegida
 {
     char opcion;
     int elegido=1;
     int x;
     int y;
-    char c = '.';
     int fin=0;
     getConsoleSize(&x, &y);
     y=3;
@@ -132,4 +133,163 @@ int selectOption(int cantOpciones)
         }
     }while(fin==0);
     return elegido;
+}
+
+
+int menuCliente()
+{
+    system("cls");
+    color(6);
+    int x;
+    int y;
+    int op;
+    getConsoleSize(&x, &y);//ancho y alto de consola
+    x=x/2;
+    y=0;//Centro de consola
+    x=x-17;//Mitad de caracteres del titulo
+    gotoxy(x,y);
+    printf("Sistema Bancario ""Bicicleta Facil"" ");
+    y++;
+    gotoxy(x,y);
+    printf("================================", x, y);
+    y=y+2;
+    gotoxy(x,y);
+    printf("Ver todos los clientes");
+    y=y+2;
+    gotoxy(x,y);
+    printf("Ver clientes activos");
+    y=y+2;
+    gotoxy(x,y);
+    printf("Ver clientes inactivos");
+    y=y+2;
+    gotoxy(x,y);
+    printf("Buscar un cliente");
+    y=y+2;
+    gotoxy(x,y);
+    printf("Volver");
+
+    return selectOption(5);
+}
+
+void opcionesCliente()
+{
+    int opcion;
+    int fin=0;
+    char busqueda[20];
+    int pos;
+    do
+    {
+        system("cls");
+         opcion=menuCliente();
+        switch(opcion)
+        {
+        case 1://Lista de cliente
+            listadoClientes(AR_CLIENTES);
+            printf("\n");
+            system("pause");
+            break;
+        case 2://Ver Clientes activos
+            printf("Lista de clientes activos:\n");
+            listadoClientesActivos(AR_CLIENTES);
+            system("pause");
+            break;
+        case 3://Ver Clientes inactivos
+            system("cls");
+            printf("Lista de clientes inactivos:\n");
+            listadoClientesInactivos(AR_CLIENTES);
+            system("pause");
+            break;
+        case 4://Buscar Cliente
+            system("cls");
+            printf("\n Ingrese Dni de cliente para realizar la busqueda:\n");
+            fflush(stdin);
+            gets(busqueda);
+            pos=buscaPosClientePorDni(AR_CLIENTES, busqueda);
+            if(pos==-1)
+            {
+                printf("\n El dni ingresado no corresponde a ningun cliente del sistema\n");
+            }else{
+            muestraClientePos(AR_CLIENTES,pos);
+
+            }
+            system("pause");
+            break;
+        case 5://salir
+            fin=1;
+            break;
+        }
+    }while(fin==0);
+}
+
+
+int menuBuscaCliente()
+{
+    system("cls");
+    color(6);
+    int x;
+    int y;
+    int op;
+    getConsoleSize(&x, &y);//ancho y alto de consola
+    x=x/2;
+    y=0;//Centro de consola
+    x=x-17;//Mitad de caracteres del titulo
+    gotoxy(x,y);
+    printf("Sistema Bancario ""Bicicleta Facil"" ");
+    y++;
+    gotoxy(x,y);
+    printf("================================", x, y);
+    y=y+2;
+    gotoxy(x,y);
+    printf("Modificar datos de cliente");
+    y=y+2;
+    gotoxy(x,y);
+    printf("Ver cuentas del cliente");
+    y=y+2;
+    gotoxy(x,y);
+    printf("Dar alta cliente");
+    y=y+2;
+    gotoxy(x,y);
+    printf("Dar baja cliente");
+    y=y+2;
+    gotoxy(x,y);
+    printf("Volver");
+
+    return selectOption(5);
+}
+
+void opcionesBuscaCliente()
+{
+    int fin=0;
+    int opcion;
+    do
+    {
+        system("cls");
+         opcion=menuBuscaCliente();
+        switch(opcion)
+        {
+        case 1://
+            listadoClientes(AR_CLIENTES);
+            printf("\n");
+            system("pause");
+            break;
+        case 2://Ver Clientes activos
+            printf("Lista de clientes activos:\n");
+            listadoClientesActivos(AR_CLIENTES);
+            system("pause");
+            break;
+        case 3://Ver Clientes inactivos
+            system("cls");
+            printf("Lista de clientes inactivos:\n");
+            listadoClientesInactivos(AR_CLIENTES);
+            system("pause");
+            break;
+        case 4://Buscar Cliente
+
+            system("pause");
+            break;
+        case 5://salir
+            fin=1;
+            break;
+        }
+    }while(fin==0);
 }

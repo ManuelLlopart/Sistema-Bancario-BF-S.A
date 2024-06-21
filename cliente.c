@@ -116,7 +116,7 @@ void muestraCliente(stCliente cliente)
     printf("\n Nro de DNI:............ %s", cliente.dni);
     printf("\n Email:................. %s", cliente.email);
     (cliente.eliminado==0)?strcpy(estado, "Activo"):strcpy(estado, "Eliminado");//ternario
-    printf("\n Estado de cliente:..... %s", estado);
+    printf("\n Estado de cliente:..... %s\n", estado);
 
 }
 
@@ -419,4 +419,39 @@ int getIdCliente(stCliente a)
 {
     int id=a.id;
     return id;
+}
+
+
+void listadoClientesActivos(char nombreArchivo[])
+{
+    FILE* archi = fopen(nombreArchivo, "rb");
+    stCliente a;
+    if(archi)
+    {
+        while(fread(&a,sizeof(stCliente),1, archi)>0)
+        {
+            if(a.eliminado==0)
+            {
+                muestraCliente(a);
+                printf("\n ===========================\n");
+            }
+        }
+    }
+}
+
+void listadoClientesInactivos(char nombreArchivo[])
+{
+    FILE* archi = fopen(nombreArchivo, "rb");
+    stCliente a;
+    if(archi)
+    {
+        while(fread(&a,sizeof(stCliente),1, archi)>0)
+        {
+            if(a.eliminado==-1)
+            {
+                muestraCliente(a);
+                printf("\n ===========================\n");
+            }
+        }
+    }
 }

@@ -29,6 +29,10 @@ void reemplazaClientePos(char nombreArchivo[],stCliente a, int pos);
 stCliente clientePos(char nombreArchivo[], int pos);//retorna el cliente de esa posicion
 int validarTelefono(char telefono[]);//Valida si el telefono tiene entre 9 y 10 caracteres
 int getIdCliente(stCliente a);
+void listadoClientesActivos(char nombreArchivo[]);
+void listadoClientesInactivos(char nombreArchivo[]);
+
+
 
 
 

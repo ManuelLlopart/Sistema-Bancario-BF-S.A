@@ -18,7 +18,7 @@
 	"cliente.h"
 	"mock.h"
 
-1718978897 source:c:\users\manu_\desktop\sistema bancario\main.c
+1718995738 source:c:\users\manu_\desktop\sistema bancario\main.c
 	<stdio.h>
 	<stdlib.h>
 	<conio.h>
@@ -28,9 +28,9 @@
 	"mock.h"
 	"gotoxy.h"
 
-1718907957 c:\users\manu_\desktop\sistema bancario\cliente.h
+1718994436 c:\users\manu_\desktop\sistema bancario\cliente.h
 
-1718908070 source:c:\users\manu_\desktop\sistema bancario\cliente.c
+1718995738 source:c:\users\manu_\desktop\sistema bancario\cliente.c
 	<stdio.h>
 	<stdlib.h>
 	<conio.h>
