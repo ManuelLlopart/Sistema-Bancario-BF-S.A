@@ -6,4 +6,17 @@ Problema = generar emails randoms
 
 Solución = Usar la función strcat y unir nombre, apellidos, id y un dominio
 
-Problema
+Problema =Posicionamiento e interaccion con menu
+
+Solución = Se investigó las librerias de gotoxy, nos llevo a que forman parte de la libreria "windows.h"
+de ahi se investiga como obtener el tamaño de la consola para saber bien donde vamos a ubicar nuestro texto
+se estudia y se agrega la funcion getConsoleSize a la libreria de gotoxy 
+
+CONSOLE_SCREEN_BUFFER_INFO csbi; // Estructura para almacenar la información de la consola
+
+GetConsoleScreenBufferInfo(GetStdHandle(STD_OUTPUT_HANDLE), &csbi); // Obtener la información del búfer de la consola
+
+*width = csbi.srWindow.Right - csbi.srWindow.Left + 1;  // Calcular el ancho de la consola. le suma 1 para no contar el cero
+
+ //el csbi.srWindow nos indica la posicion dependiendo que le pongamos, bottom por ej es la parte mas baja de la consola
+ el dato que nos da, depende de donde esta ubicado el cursor
