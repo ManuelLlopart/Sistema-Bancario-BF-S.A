@@ -11,12 +11,12 @@
 #define AR_CUENTAS "cuentas.dat"
 
 void menuPpal();
+int selectOption(int cantOpciones);
 
 
 int main()
 {
     srand(time(NULL));
-    int pos=0;
 
     //getCliente2ArchivoRandom(AR_CLIENTES);
 //    printf("Listado\n");
@@ -35,6 +35,7 @@ void menuPpal()
     color(6);
     int x;
     int y;
+    int op;
     getConsoleSize(&x, &y);//ancho y alto de consola
     x=x/2;
     y=0;//Centro de consola
@@ -46,16 +47,89 @@ void menuPpal()
     printf("================================", x, y);
     y=y+2;
     gotoxy(x,y);
-    printf("OPCION 1");
+    printf("CLIENTES");
     y=y+2;
     gotoxy(x,y);
-    printf("OPCION 2");
+    printf("CUENTAS");
     y=y+2;
     gotoxy(x,y);
-    printf("OPCION 3");
-    y=y+2;
+    printf("SALIR");
+    op=selectOption(3);
+    printf("\n La opcion es %d", op);
+}
+
+int selectMenuPpal()
+{
+    int opcion=0;
+    int x;
+    int y;
+
+    getConsoleSize(&x, &y);
+    y=3;
+    x=x-18;
     gotoxy(x,y);
-    printf("OPCION 4");
-    printf("\n");
-    printf("\n");
+
+//    do
+//    {
+//        switch(opcion)
+//        {
+//
+//        }
+//    }while();
+
+
+    return opcion;
+}
+
+int selectOption(int cantOpciones)
+{
+    char opcion;
+    int elegido=1;
+    int x;
+    int y;
+    char c = '.';
+    int fin=0;
+    getConsoleSize(&x, &y);
+    y=3;
+    x=(x/2)-18;
+    gotoxy(x,y);
+    do
+    {
+        opcion=getch();
+        switch(opcion)
+        {
+        case 72://arriba
+            if(y>3){
+                    y=y-2;
+                    gotoxy(x,y);
+                    printf("");
+                    elegido--;
+                }else{
+                    y=1+cantOpciones*2;
+                    gotoxy(x,y);
+                    printf("");
+                    elegido=cantOpciones;
+                }
+
+                break;
+        case 80://abajo
+            if(y<cantOpciones*2){
+                    y=y+2;
+                    gotoxy(x,y);
+                    printf("");
+                    elegido++;
+                }else{
+                    y=3;
+                    gotoxy(x,y);
+                    printf("");
+                    elegido=1;
+                }
+            break;
+        case 13:
+            fin=1;
+            break;
+
+        }
+    }while(fin==0);
+    return elegido;
 }
