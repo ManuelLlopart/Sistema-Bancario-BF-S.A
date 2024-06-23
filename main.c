@@ -166,9 +166,12 @@ int menuCliente()
     printf("Buscar un cliente");
     y=y+2;
     gotoxy(x,y);
+    printf("Cargar un cliente");
+    y=y+2;
+    gotoxy(x,y);
     printf("Volver");
 
-    return selectOption(5);
+    return selectOption(6);
 }
 
 void opcionesCliente()
@@ -177,6 +180,7 @@ void opcionesCliente()
     int fin=0;
     char busqueda[20];
     int pos;
+    char modifica=0;
     do
     {
         system("cls");
@@ -184,6 +188,7 @@ void opcionesCliente()
         switch(opcion)
         {
         case 1://Lista de cliente
+            system("cls");
             listadoClientes(AR_CLIENTES);
             printf("\n");
             system("pause");
@@ -209,12 +214,26 @@ void opcionesCliente()
             {
                 printf("\n El dni ingresado no corresponde a ningun cliente del sistema\n");
             }else{
+            printf("\n Cliente encontrado: \n");
             muestraClientePos(AR_CLIENTES,pos);
+            printf("\n Para modificar el cliente presione enter. \n Para volver al menu anterior presione cualquier tecla\n");
+            fflush(stdin);
+            modifica=getch();
+            if(modifica == 13)
+            {
+                reemplazaClientePos(AR_CLIENTES,modificarCliente(clientePos(AR_CLIENTES, pos)), pos);
+                printf("\n Cliente modificado con exito\n");
 
+            }
             }
             system("pause");
             break;
-        case 5://salir
+        case 5:
+            system("cls");
+            muestraCliente(cargaCliente(AR_CLIENTES));
+            system("pause");
+            break;
+        case 6://salir
             fin=1;
             break;
         }

@@ -18,7 +18,7 @@
 	"cliente.h"
 	"mock.h"
 
-1718995738 source:c:\users\manu_\desktop\sistema bancario\main.c
+1719159410 source:c:\users\manu_\desktop\sistema bancario\main.c
 	<stdio.h>
 	<stdlib.h>
 	<conio.h>
@@ -30,7 +30,7 @@
 
 1718994436 c:\users\manu_\desktop\sistema bancario\cliente.h
 
-1718995738 source:c:\users\manu_\desktop\sistema bancario\cliente.c
+1719159574 source:c:\users\manu_\desktop\sistema bancario\cliente.c
 	<stdio.h>
 	<stdlib.h>
 	<conio.h>

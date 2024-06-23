@@ -306,14 +306,14 @@ stCliente modificarCliente(stCliente a)
         printf("\nIngrese nuevo nombre:\n");
         fflush(stdin);
         gets(a.nombre);
-        printf("\n Nombre actualizado correctamente");
+        printf("\n Nombre actualizado correctamente\n");
         system("pause");
         break;
     case 50:
         printf("\nIngrese nuevo apellido:\n");
         fflush(stdin);
         gets(a.apellido);
-        printf("\n Apellido actualizado correctamente");
+        printf("\n Apellido actualizado correctamente\n");
         system("pause");
         break;
     case 51:
@@ -330,7 +330,7 @@ stCliente modificarCliente(stCliente a)
                 system("cls");
             }
         }
-        printf("\n Dni actualizado correctamente");
+        printf("\n Dni actualizado correctamente\n");
         system("pause");
         break;
     case 52:
@@ -347,7 +347,7 @@ stCliente modificarCliente(stCliente a)
                 system("cls");
             }
         }
-        printf("\n Email actualizado correctamente");
+        printf("\n Email actualizado correctamente\n");
         system("pause");
         break;
     case 53:
@@ -395,7 +395,7 @@ void reemplazaClientePos(char nombreArchivo[],stCliente a, int pos)
     FILE* archi=fopen(nombreArchivo, "r+b");
     if(archi)
     {
-        fseek(archi,(pos-1)*sizeof(stCliente), SEEK_SET);
+        fseek(archi,pos*sizeof(stCliente), SEEK_SET);
         fwrite(&a,sizeof(stCliente),1, archi);
         fclose(archi);
     }
@@ -407,7 +407,7 @@ stCliente clientePos(char nombreArchivo[], int pos)
     stCliente a;
     if(archi)
     {
-        fseek(archi,(pos-1)*sizeof(stCliente), SEEK_SET);
+        fseek(archi,pos*sizeof(stCliente), SEEK_SET);
         fread(&a,sizeof(stCliente),1,archi);
         fclose(archi);
     }
