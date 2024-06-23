@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <conio.h>
+#include "domicilio.h"
 #include <string.h>
 #include "cliente.h"
 #include "mock.h"
@@ -67,7 +68,7 @@ stCliente cargaCliente(char nombreArchivo[])//Falta  libreria de Domicilio
             system("pause");
         }
         }
-        //cargaDomicilio(cliente);
+        cliente.domicilio=cargaDomicilio();
         cliente.eliminado = 0;
         fseek(archi,0,SEEK_END);
         cliente.id= (ftell(archi)/sizeof(stCliente)+1);
@@ -115,6 +116,7 @@ void muestraCliente(stCliente cliente)
     printf("\n Nro de telefono:....... %s", cliente.telefono);
     printf("\n Nro de DNI:............ %s", cliente.dni);
     printf("\n Email:................. %s", cliente.email);
+    muestraDomicilio(cliente.domicilio);
     (cliente.eliminado==0)?strcpy(estado, "Activo"):strcpy(estado, "Eliminado");//ternario
     printf("\n Estado de cliente:..... %s\n", estado);
 
@@ -366,7 +368,8 @@ stCliente modificarCliente(stCliente a)
         }
         }
         break;
-    case 54://stDomicilio
+    case 54:
+        a.domicilio=modificarDomicilio(a.domicilio);
         break;
     case 55:
         bajaCliente(&a);

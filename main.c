@@ -3,9 +3,11 @@
 #include <conio.h>
 #include <time.h>
 #include <string.h>
+#include "domicilio.h"
 #include "cliente.h"
 #include "mock.h"
 #include "gotoxy.h"
+
 
 #define AR_CLIENTES "clientes.dat"
 #define AR_CUENTAS "cuentas.dat"
@@ -169,9 +171,12 @@ int menuCliente()
     printf("Cargar un cliente");
     y=y+2;
     gotoxy(x,y);
+    printf("Cargar un cliente Random");
+    y=y+2;
+    gotoxy(x,y);
     printf("Volver");
 
-    return selectOption(6);
+    return selectOption(7);
 }
 
 void opcionesCliente()
@@ -222,18 +227,23 @@ void opcionesCliente()
             if(modifica == 13)
             {
                 reemplazaClientePos(AR_CLIENTES,modificarCliente(clientePos(AR_CLIENTES, pos)), pos);
+                system("cls");
                 printf("\n Cliente modificado con exito\n");
 
             }
             }
             system("pause");
             break;
-        case 5:
+        case 5://cargar Cliente
             system("cls");
             muestraCliente(cargaCliente(AR_CLIENTES));
             system("pause");
             break;
-        case 6://salir
+        case 6://cargar Cliente Random
+            getCliente2ArchivoRandom(AR_CLIENTES);
+            printf("\n Carga exitosa");
+            break;
+        case 7://salir
             fin=1;
             break;
         }
