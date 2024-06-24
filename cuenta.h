@@ -1,5 +1,6 @@
 #ifndef CUENTA_H_INCLUDED
 #define CUENTA_H_INCLUDED
+#include "cliente.h"
 
 typedef struct
 {
@@ -12,13 +13,33 @@ typedef struct
     int eliminado; /// 0 si está activo - 1 si está eliminado
 } stCuenta;
 
-stCuenta cargar_cuenta ();
-void mostrar_cuenta (stCuenta cuenta);
-void actualizar_saldo(stCuenta *cuenta, float monto);
-void baja_cuenta(stCuenta cuenta[], int BuscarCuenta, int CantidadCuentas);
-void modificacion_cuenta (stCuenta cuenta[], int CantidadCuentas,int BuscarId);
-void cargar_cuenta_archivo(char NombreArchivo []);
-void listado_de_cuenta(char NombreArchivo[]);
+
+int cargarCuenta (stCuenta cuenta[],int v, int dim);
+void cargaCuenta (char NombreArchivo [], stCliente cliente);
+void mostrarCuenta (stCuenta cuenta[],int validos);
+void arreglo2Archivo (char NombreArchivo[], int v,stCuenta cuenta[]);
+int consultaCuenta(char NombreArchivo[], int BuscarId);
+void mostrarCuentaIndividual(stCuenta cuenta);
+void muestraArchivoCuentas(char nombreArchivo[]);
+int listadoCliente (char NombreArchivo[], int BuscarId);
+int tipoCuentas ();
+void muestraCuentaPos(char NombreArchivo[], int pos);
+void reemplazaCuentaPos(char nombreArchivo[],stCuenta a, int pos);
+int buscaPosCuentaPorId(char nombreArchivo[], int idBuscado,int tipoCuenta);
+stCuenta bajaCuenta(stCuenta cuenta);
+stCuenta cuentaPos(char nombreArchivo[], int pos);
+int muestraCuentaEspecificaEliminada(char NombreArchivo[], int BuscarId);
+stCuenta activarCuenta (stCuenta cuenta);
+stCuenta cargarCuentaIndividual (stCuenta cuenta);
+stCuenta modificarCuenta(stCuenta cuenta);
+stCuenta modificaPorSeccion (stCuenta cuenta,int modificar);
+int buscaPosCuentaPorIdModificacion(char nombreArchivo[], int idBuscado, int tipoCuenta, int opcionSeleccionada);
+int mostrarTodasLasCuentasActivas (char NombreArchivo[], int BuscarId);
+int mostrarTodasLasCuentasInactivas (char NombreArchivo[], int BuscarId);
+int cuentaCuentasCliente (char NombreArchivo[], int BuscarId);
+
+void actualizarSaldo(stCuenta *cuenta, float monto);
+void modificacion_cuenta (char NombreArchivo[], int BuscarId);
 
 
 #endif // CUENTA_H_INCLUDED

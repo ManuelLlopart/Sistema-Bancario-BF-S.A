@@ -7,7 +7,8 @@
 #include "cliente.h"
 #include "mock.h"
 #include "gotoxy.h"
-
+#include "cuenta.h"
+#include "movimientos.h"
 
 #define AR_CLIENTES "clientes.dat"
 #define AR_CUENTAS "cuentas.dat"
@@ -37,7 +38,7 @@ int main()
 
             break;
         case 2://cuenta
-
+            opcionesCuenta();
             break;
         case 3://salir
             fin=1;
@@ -221,16 +222,12 @@ void opcionesCliente()
             }else{
             printf("\n Cliente encontrado: \n");
             muestraClientePos(AR_CLIENTES,pos);
-            printf("\n Para modificar el cliente presione enter. \n Para volver al menu anterior presione cualquier tecla\n");
+            printf("\n Para modificar el cliente presione 1.\n ");
+            printf("Para crear una cuenta presione 2\n");
+            printf("Para volver al menu anterior presione cualquier tecla\n");
             fflush(stdin);
             modifica=getch();
-            if(modifica == 13)
-            {
-                reemplazaClientePos(AR_CLIENTES,modificarCliente(clientePos(AR_CLIENTES, pos)), pos);
-                system("cls");
-                printf("\n Cliente modificado con exito\n");
-
-            }
+            opcionesClienteBuscado(modifica, pos);
             }
             system("pause");
             break;
@@ -321,4 +318,78 @@ void opcionesBuscaCliente()
             break;
         }
     }while(fin==0);
+}
+
+int menuCuenta()
+{
+    system("cls");
+    color(6);
+    int x;
+    int y;
+    int op;
+    getConsoleSize(&x, &y);//ancho y alto de consola
+    x=x/2;
+    y=0;//Centro de consola
+    x=x-17;//Mitad de caracteres del titulo
+    gotoxy(x,y);
+    printf("Sistema Bancario ""Bicicleta Facil"" ");
+    y++;
+    gotoxy(x,y);
+    printf("================================", x, y);
+    y=y+2;
+    gotoxy(x,y);
+    printf("Ver todas las cuentas");
+    y=y+2;
+    gotoxy(x,y);
+    printf("Salir");
+
+    return selectOption(2);
+
+}
+void opcionesCuenta()
+{
+    int fin=0;
+    int opcion;
+    do
+    {
+        system("cls");
+         opcion=menuCuenta();
+        switch(opcion)
+        {
+        case 1://Ver todas las cuentas
+            system("cls");
+            muestraArchivoCuentas(AR_CUENTAS);
+            printf("\n");
+            system("pause");
+            break;
+
+        case 2://salir
+            fin=1;
+            break;
+        }
+    }while(fin==0);
+}
+
+
+void opcionesClienteBuscado(int opcion, int pos)
+{
+    int numCuentas=0;
+    stCliente cliente=clientePos(AR_CLIENTES, pos);
+    switch(opcion)
+    {
+    case 49://modifica cliente
+
+                reemplazaClientePos(AR_CLIENTES,modificarCliente(clientePos(AR_CLIENTES, pos)), pos);
+                system("cls");
+                printf("\n Cliente modificado con exito\n");
+        break;
+    case 50://Crear Cuenta
+        cargaCuenta(AR_CUENTAS, cliente);
+        break;
+    case 51://Ver cuentas del cliente
+        numCuentas=listadoCliente(AR_CUENTAS, cliente.id);
+        printf("\n El cliente tiene %d cuentas\n", numCuentas);
+        break;
+
+    }
 }

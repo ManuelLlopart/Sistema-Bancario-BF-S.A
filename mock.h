@@ -1,5 +1,7 @@
 #ifndef MOCK_H_INCLUDED
 #define MOCK_H_INCLUDED
+#include "movimientos.h"
+#include "cliente.h"
 
 void getName(char name []);
 void getLastName(char lastName []);
@@ -13,6 +15,17 @@ void getProvincia (char provincia []);
 void getCpos (char cpos []);
 void getNumDomicilio (char numeroDomicilio []);
 stDomicilio getDomicilioRandom();
+void getDetalle(char detalle[]);
+void getDetalleSaldoNegativo(char detalle[]);
+float getImporte();
+int getDia();
+int getMes();
+int getAnio();
+stMovimientos getMovimientosRandom();
+void muestraMovimientoRandom(stMovimientos movimiento);
+int cargaMovimientosRandomEnArchi(char nombreArchivo[]);
+void muestraVariosMovimientosRandom(char nombreArchivo[]);
+void cargaMilMovimientosRandomEnArchi(char nombreArchivo[]);
 
 
 #endif // MOCK_H_INCLUDED

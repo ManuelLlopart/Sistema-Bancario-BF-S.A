@@ -4,8 +4,10 @@
 #include <time.h>
 #include <string.h>
 #include "cliente.h"
+#include "movimientos.h"
 #include "mock.h"
 #include "domicilio.h"
+const int ESC=27;
 
 void getName(char name [])
 {
@@ -156,3 +158,137 @@ stDomicilio getDomicilioRandom ()
 
     return d;
 }
+
+void getDetalle(char detalle[]) ///descripcion del detalle de saldo positivo
+{
+    char detalles[][100]= {"Credito de haberes", "Transferencia de cuenta de ahorros","Acreditacion de plazo fijo",
+                           "Transferencia electronica recibida","Cobro de dividendos", "Deposito de cheques","Pago por reembolso"
+                          };
+
+
+    strcpy(detalle,detalles[(rand()%(sizeof(detalles))/100)]);
+}
+void getDetalleSaldoNegativo(char detalle[]) ///descripcion del detalle de saldo negativo
+{
+    char detalleSaldoNegativo[][100]= {"Pago de factura","Retiro en cajero automatico","Transferencia a cuenta de terceros",
+                                       "Pago de tarjeta de credito","Pago con tarjeta de debito","Pago de prestamo bancario"
+                                      };
+
+    strcpy(detalle,detalleSaldoNegativo[(rand()%(sizeof(detalleSaldoNegativo))/100)]);
+}
+
+float getImporte()
+{
+    return rand()%50000-rand()%40000;
+}
+
+int getDia()
+{
+    return rand()%31+1;
+}
+
+int getMes()
+{
+    return rand()%12+1;
+}
+
+int getAnio()
+{
+    return rand()%203+1822;
+}
+
+stMovimientos getMovimientosRandom() ///funcion que carga y retorna un movimiento
+{
+    stMovimientos mov;
+    mov.importe=getImporte();
+    if (mov.importe>0)
+    {
+        getDetalle(mov.detalle);
+    }
+    else
+    {
+        getDetalleSaldoNegativo(mov.detalle);
+    }
+    mov.dia=getDia();
+    mov.mes=getMes();
+    mov.anio=getAnio();
+
+    return mov;
+}
+
+void muestraMovimientoRandom(stMovimientos movimiento)
+{
+    printf("Id:%d\n",movimiento.id);
+    printf ("Detalle:%s\n",movimiento.detalle);
+    printf("Importe:%.2f\n",movimiento.importe);
+    printf("Dia:%d\n",movimiento.dia);
+    printf("Mes:%d\n",movimiento.mes);
+    printf("Anio:%d\n",movimiento.anio);
+    printf("\n====================================\n");
+}
+
+int cargaMovimientosRandomEnArchi(char nombreArchivo[])
+{
+    FILE *archi=fopen(nombreArchivo,"wb");
+    stMovimientos movimiento;
+    int cantidadMovimientos = 0;
+    char opcion=0;
+    int idMovimiento =  cuentaRegistros(nombreArchivo, sizeof(stMovimientos));
+    if (archi)
+    {
+        while(opcion!=ESC)
+
+        {
+            movimiento=getMovimientosRandom();
+            idMovimiento++;
+            movimiento.id=idMovimiento;
+            muestraMovimientoRandom(movimiento);
+            ///devuelve el nro de archivos que escribo
+            cantidadMovimientos = cantidadMovimientos + fwrite(&movimiento,sizeof(stMovimientos),1,archi);
+            printf("Ingrese ESC para salir o cualquier otra tecla si desea agregar un nuevo movimiento:\n");
+            fflush(stdin);
+            opcion=getch();
+            system("cls");
+        }
+
+        fclose(archi);
+    }
+    return cantidadMovimientos;
+}
+
+void muestraVariosMovimientosRandom(char nombreArchivo[])
+{
+    FILE *archi=fopen(nombreArchivo,"rb");
+    stMovimientos movimiento;
+
+    if (archi)
+    {
+        while(fread(&movimiento,sizeof(stMovimientos),1,archi)>0)
+        {
+            muestraMovimientoRandom(movimiento);
+        }
+
+        fclose(archi);
+    }
+}
+void cargaMilMovimientosRandomEnArchi(char nombreArchivo[])
+{
+    FILE *archi=fopen(nombreArchivo,"wb");
+    stMovimientos movimiento;
+    char opcion=0;
+    int idMovimiento =  cuentaRegistros(nombreArchivo, sizeof(stMovimientos));
+    if (archi)
+    {
+        for (int i=0; i<1000; i++)
+
+        {
+            movimiento=getMovimientosRandom();
+            idMovimiento++;
+            movimiento.id=idMovimiento;
+            fwrite(&movimiento,sizeof(stMovimientos),1,archi);
+        }
+
+        fclose(archi);
+    }
+}
+
