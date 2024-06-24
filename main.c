@@ -543,9 +543,15 @@ int menuCuentaElegida()
     printf("Crear movimiento random");
     y=y+2;
     gotoxy(x,y);
+    printf("Dar de alta un movimiento");
+    y=y+2;
+    gotoxy(x,y);
+    printf("Dar de baja un movimiento");
+    y=y+2;
+    gotoxy(x,y);
     printf("Volver");
 
-    return selectOption(7);
+    return selectOption(9);
 }
 
 void opcionesCuentaElegida(stCuenta cuenta)
@@ -554,6 +560,7 @@ void opcionesCuentaElegida(stCuenta cuenta)
     int fin=0;
     int opcion;
     int pos;
+    int idMov;
     stMovimientos mov;
     int cant=0;
     pos=buscaPosCuentaPorId(AR_CUENTAS,cuenta.idCliente, cuenta.nroCuenta);
@@ -606,7 +613,33 @@ void opcionesCuentaElegida(stCuenta cuenta)
             cant=cargaMovimientosRandomEnArchi(AR_MOVIMIENTOS,AR_CUENTAS,cuenta.id);
             printf("\n Se cargaron %d movimientos\n", cant);
             break;
-        case 7://salir
+        case 7://dar alta movimiento
+            system("cls");
+            printf("\nIngrese el id del movimiento que quiere eliminar\n");
+            scanf("%d", &idMov);
+            if(idMov<=cuentaRegistros(AR_MOVIMIENTOS, sizeof(stMovimientos)))
+            {
+                 mov=altaMovimiento(AR_MOVIMIENTOS, idMov, cuenta.id);
+            }else
+            {
+                printf("\nEl id ingresado no existe\n");
+            }
+            system("pause");
+            break;
+        case 8://dar baja movimiento
+            system("cls");
+            printf("\nIngrese el id del movimiento que quiere dar de alta\n");
+            scanf("%d", &idMov);
+            if(idMov<=cuentaRegistros(AR_MOVIMIENTOS, sizeof(stMovimientos)))
+            {
+                 mov=eliminaMovimiento(AR_MOVIMIENTOS, idMov, cuenta.id);
+            }else
+            {
+                printf("\nEl id ingresado no existe\n");
+            }
+            system("pause");
+            break;
+        case 9://salir
             fin=1;
             break;
         }

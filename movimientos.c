@@ -49,7 +49,7 @@ void guardaMovimientoEnArchi(char nombreArchivo[],stMovimientos movimiento)
 
 ///crear una funcion para dar de baja (eliminar) un movimiento
 
-stMovimientos eliminaMovimiento(char nombreArchivo[],int idMovimiento)///lo elimino comparando con el id del mov. que quiero eliminar
+stMovimientos eliminaMovimiento(char nombreArchivo[],int idMovimiento, int idCuenta)///lo elimino comparando con el id del mov. que quiero eliminar
 {
     FILE *archi=fopen(nombreArchivo,"r+b");
     stMovimientos mov;
@@ -58,16 +58,18 @@ stMovimientos eliminaMovimiento(char nombreArchivo[],int idMovimiento)///lo elim
     {
         while(flag==0 && fread(&mov,sizeof(stMovimientos),1,archi)>0)
         {
-            if (mov.id==idMovimiento && mov.eliminado==0) ///si coinciden, cambia el valor de eliminado a verdadero
+            if (mov.id==idMovimiento && mov.eliminado==0 && mov.idCuenta==idCuenta) ///si coinciden, cambia el valor de eliminado a verdadero
             {
                 flag=1;
                 mov.eliminado=1;
                 printf("Usted ha dado de baja el siguiente movimiento:\n");
                 muestraMovimiento(mov);
             }
-            else if (mov.id==idMovimiento && mov.eliminado==1)
+            else if (mov.id==idMovimiento && mov.eliminado==1 && mov.idCuenta==idCuenta)
             {
                 printf("El movimiento ya fue dado de baja\n");
+            }else if(mov.id==idMovimiento){
+            printf("\nEl id ingresado no corresponde a esta cuenta\n");
             }
         }
         fseek(archi,-1*sizeof(stMovimientos),SEEK_CUR);///me paro donde esta el cursor y me muevo un registro hacia atras
@@ -78,6 +80,36 @@ stMovimientos eliminaMovimiento(char nombreArchivo[],int idMovimiento)///lo elim
     return mov;
 }
 
+stMovimientos altaMovimiento(char nombreArchivo[],int idMovimiento, int idCuenta)///lo doyu de alta comparando con el id del mov. que quiero dar de alta
+{
+    FILE *archi=fopen(nombreArchivo,"r+b");
+    stMovimientos mov;
+    int flag=0;
+    if (archi)
+    {
+        while(flag==0 && fread(&mov,sizeof(stMovimientos),1,archi)>0)
+        {
+            if (mov.id==idMovimiento && mov.eliminado==1 && mov.idCuenta==idCuenta) ///si coinciden, cambia el valor de verdadero a eliminado
+            {
+                flag=1;
+                mov.eliminado=0;
+                printf("Usted ha dado de alta el siguiente movimiento:\n");
+                muestraMovimiento(mov);
+            }
+            else if (mov.id==idMovimiento && mov.eliminado==0 && mov.idCuenta==idCuenta)
+            {
+                printf("El movimiento ya fue dado de alta\n");
+            }else if(mov.id==idMovimiento){
+            printf("\nEl id ingresado no corresponde a esta cuenta\n");
+            }
+        }
+        fseek(archi,-1*sizeof(stMovimientos),SEEK_CUR);///me paro donde esta el cursor y me muevo un registro hacia atras
+        fwrite(&mov,sizeof(stMovimientos),1,archi); ///reescribo el movimiento con eliminado=0
+
+        fclose(archi);
+    }
+    return mov;
+}
 ///crear una funcion para modificar un movimiento
 
 stMovimientos modificaMovimiento(char nombreArchivo[],int pos,char detalleMov[],float importeMov,int diaModif,int mesModif,int anioModif)
