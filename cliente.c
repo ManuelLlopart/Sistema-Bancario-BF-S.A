@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <conio.h>
+#include "domicilio.h"
 #include <string.h>
 #include "cliente.h"
 #include "mock.h"
@@ -67,7 +68,7 @@ stCliente cargaCliente(char nombreArchivo[])//Falta  libreria de Domicilio
             system("pause");
         }
         }
-        //cargaDomicilio(cliente);
+        cliente.domicilio=cargaDomicilio();
         cliente.eliminado = 0;
         fseek(archi,0,SEEK_END);
         cliente.id= (ftell(archi)/sizeof(stCliente)+1);
@@ -115,8 +116,9 @@ void muestraCliente(stCliente cliente)
     printf("\n Nro de telefono:....... %s", cliente.telefono);
     printf("\n Nro de DNI:............ %s", cliente.dni);
     printf("\n Email:................. %s", cliente.email);
+    muestraDomicilio(cliente.domicilio);
     (cliente.eliminado==0)?strcpy(estado, "Activo"):strcpy(estado, "Eliminado");//ternario
-    printf("\n Estado de cliente:..... %s", estado);
+    printf("\n Estado de cliente:..... %s\n", estado);
 
 }
 
@@ -295,6 +297,7 @@ stCliente modificarCliente(stCliente a)
     int dni=0;
     int email=0;
     int opcion;
+    int telefono=0;
     do
     {
         opcion=menuModif();
@@ -305,14 +308,14 @@ stCliente modificarCliente(stCliente a)
         printf("\nIngrese nuevo nombre:\n");
         fflush(stdin);
         gets(a.nombre);
-        printf("\n Nombre actualizado correctamente");
+        printf("\n Nombre actualizado correctamente\n");
         system("pause");
         break;
     case 50:
         printf("\nIngrese nuevo apellido:\n");
         fflush(stdin);
         gets(a.apellido);
-        printf("\n Apellido actualizado correctamente");
+        printf("\n Apellido actualizado correctamente\n");
         system("pause");
         break;
     case 51:
@@ -329,7 +332,7 @@ stCliente modificarCliente(stCliente a)
                 system("cls");
             }
         }
-        printf("\n Dni actualizado correctamente");
+        printf("\n Dni actualizado correctamente\n");
         system("pause");
         break;
     case 52:
@@ -346,7 +349,7 @@ stCliente modificarCliente(stCliente a)
                 system("cls");
             }
         }
-        printf("\n Email actualizado correctamente");
+        printf("\n Email actualizado correctamente\n");
         system("pause");
         break;
     case 53:
@@ -363,8 +366,10 @@ stCliente modificarCliente(stCliente a)
             printf("\n Numero no valido, intente nuevamente\n");
             system("pause");
         }
+        }
         break;
-    case 54://stDomicilio
+    case 54:
+        a.domicilio=modificarDomicilio(a.domicilio);
         break;
     case 55:
         bajaCliente(&a);
@@ -393,7 +398,7 @@ void reemplazaClientePos(char nombreArchivo[],stCliente a, int pos)
     FILE* archi=fopen(nombreArchivo, "r+b");
     if(archi)
     {
-        fseek(archi,(pos-1)*sizeof(stCliente), SEEK_SET);
+        fseek(archi,pos*sizeof(stCliente), SEEK_SET);
         fwrite(&a,sizeof(stCliente),1, archi);
         fclose(archi);
     }
@@ -405,9 +410,51 @@ stCliente clientePos(char nombreArchivo[], int pos)
     stCliente a;
     if(archi)
     {
-        fseek(archi,(pos-1)*sizeof(stCliente), SEEK_SET);
+        fseek(archi,pos*sizeof(stCliente), SEEK_SET);
         fread(&a,sizeof(stCliente),1,archi);
         fclose(archi);
     }
     return a;
+}
+
+
+int getIdCliente(stCliente a)
+{
+    int id=a.id;
+    return id;
+}
+
+
+void listadoClientesActivos(char nombreArchivo[])
+{
+    FILE* archi = fopen(nombreArchivo, "rb");
+    stCliente a;
+    if(archi)
+    {
+        while(fread(&a,sizeof(stCliente),1, archi)>0)
+        {
+            if(a.eliminado==0)
+            {
+                muestraCliente(a);
+                printf("\n ===========================\n");
+            }
+        }
+    }
+}
+
+void listadoClientesInactivos(char nombreArchivo[])
+{
+    FILE* archi = fopen(nombreArchivo, "rb");
+    stCliente a;
+    if(archi)
+    {
+        while(fread(&a,sizeof(stCliente),1, archi)>0)
+        {
+            if(a.eliminado==-1)
+            {
+                muestraCliente(a);
+                printf("\n ===========================\n");
+            }
+        }
+    }
 }

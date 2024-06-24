@@ -4,7 +4,12 @@
 #include <time.h>
 #include <string.h>
 #include "cliente.h"
+#include "movimientos.h"
 #include "mock.h"
+#include "domicilio.h"
+#include "cuenta.h"
+
+const int ESC=27;
 
 void getName(char name [])
 {
@@ -20,9 +25,9 @@ void getName(char name [])
 void getLastName(char lastName [])
 {
     char lastNames[][30]= {"Jurjo","Trozo","Jon","Quito","Molina", "Chavez", "Paz", "Llopart", "Gimenez", "Olivera", "Cortez", "Cheres", "Butaccio",
-                           "Sanchez", "Fernandez", "Del Rio", "Del Mar", "Maglione", "Aquino", "Querales", "Libonati", "Lima", "Linares", "Garcia", "Almiron", "Costa", "Turtur", "Cepeda",
-                           "Aguirre", "Perales", "Amalfitano", "Dolce", "Tusar", "Roldan", "Ochoa", "Hidalgo", "Kristiansen", "Millan", "Martinez", "Ale", "Irene", "Baden Powell", "Rios", "Vilar", "Borrel",
-                           "Luna", "Nunez", "Bordon", "Bonilla", "Maldonado", "Ledesma", "Bravo", "Torres", "Messi", "Suarez", "Aguero", "Romero", "Barco", "Montiel", "Mcalister", "Acu a", "Armani", "Maradona", "Paez", "Paic", "Cerati",
+                           "Sanchez", "Fernandez", "DelRio", "DelMar", "Maglione", "Aquino", "Querales", "Libonati", "Lima", "Linares", "Garcia", "Almiron", "Costa", "Turtur", "Cepeda",
+                           "Aguirre", "Perales", "Amalfitano", "Dolce", "Tusar", "Roldan", "Ochoa", "Hidalgo", "Kristiansen", "Millan", "Martinez", "Ale", "Irene", "BadenPowell", "Rios", "Vilar", "Borrel",
+                           "Luna", "Nunez", "Bordon", "Bonilla", "Maldonado", "Ledesma", "Bravo", "Torres", "Messi", "Suarez", "Aguero", "Romero", "Barco", "Montiel", "Mcalister", "Acunia", "Armani", "Maradona", "Paez", "Paic", "Cerati",
                            "Espineta", "Porro", "Fazolari", "Luque", "Milei"
                           };
     strcpy(lastName, lastNames[rand()%(sizeof(lastNames)/30)]);
@@ -74,6 +79,7 @@ void getCliente2ArchivoRandom(char nombreArchivo[])
         getLastName(a.apellido);
         getDni(a.dni);
         getTelefonoRandom(a.telefono);
+        a.domicilio=getDomicilioRandom();
         fseek(archi,0,SEEK_END);
         a.id= (ftell(archi)/sizeof(stCliente)+1);
         getEmailCliente(&a);
@@ -85,3 +91,204 @@ void getCliente2ArchivoRandom(char nombreArchivo[])
         fclose(archi);
     }
 }
+
+
+void getCalle(char calle [])
+{
+    char calles[][30]= {"Avenida Constitucion","Avenida Colon","Avenida Independencia","Avenida Luro","Avenida Juan B. Justo","Avenida Jara",
+                        "Avenida Mario Bravo","Avenida Champagnat","Avenida Pedro Luro","Boulevard Maritimo","Guemes","San Martin","Mitre","Alberti",
+                        "Entre Rios","12 de Octubre","Peralta Ramos","Tucuman","Alsina","Buenos Aires"
+                       };
+
+    strcpy(calle,calles[rand()%(sizeof(calles)/30)]);
+}
+
+
+void getLocalidad (char localidad [])
+{
+
+    char localidades [] [30]= {"Mar del Plata","Batan","Chapadmalal","Sierra de los Padres"};
+
+    strcpy ( localidad, localidades [rand () % (sizeof (localidades))/30]);
+
+}
+
+void getProvincia (char provincia [])
+{
+
+    char provincias [] [20]= {"Buenos Aires","CABA","Catamarca","Chaco","Chubut","Cordoba","Corrientes","Entre Rios","Formosa","Jujuy","La Pampa",
+                              "La Rioja","Mendoza","Misiones","Neuquen","Rio Negro","Salta","San Juan","San Luis","Santa Cruz","Santa Fe","Santiago del Estero","Tierra del Fuego",
+                              "Tucuman"
+                             };
+
+
+    strcpy (provincia, provincias [rand () % sizeof (provincias) /20]);
+
+}
+
+void getCpos (char cPos [])
+{
+       for (int i = 0; i < 4; i++) {
+        cPos[i] = (rand() % 10) + '0'; // Convertir el n�mero a valor ASCII de char
+    }
+    cPos[4] = '\0'; // Agregar el car�cter nulo al final de la cadena
+
+    return cPos;
+}
+
+
+
+void getNumDomicilio (char numeroDomicilio [])
+{
+
+    int numDom=rand ()%100 + 999;
+    char cadena [10];
+    sprintf (cadena, "%d", numDom);
+    strcpy ( numeroDomicilio, cadena);
+
+}
+
+stDomicilio getDomicilioRandom ()
+{
+    stDomicilio d;
+
+    getCalle (d.calle);
+    getNumDomicilio (d.nro);
+    getLocalidad(d.localidad);
+    getProvincia(d.provincia);
+    getCpos (d.cPos);
+
+    return d;
+}
+
+void getDetalle(char detalle[]) ///descripcion del detalle de saldo positivo
+{
+    char detalles[][100]= {"Credito de haberes", "Transferencia de cuenta de ahorros","Acreditacion de plazo fijo",
+                           "Transferencia electronica recibida","Cobro de dividendos", "Deposito de cheques","Pago por reembolso"
+                          };
+
+
+    strcpy(detalle,detalles[(rand()%(sizeof(detalles))/100)]);
+}
+void getDetalleSaldoNegativo(char detalle[]) ///descripcion del detalle de saldo negativo
+{
+    char detalleSaldoNegativo[][100]= {"Pago de factura","Retiro en cajero automatico","Transferencia a cuenta de terceros",
+                                       "Pago de tarjeta de credito","Pago con tarjeta de debito","Pago de prestamo bancario"
+                                      };
+
+    strcpy(detalle,detalleSaldoNegativo[(rand()%(sizeof(detalleSaldoNegativo))/100)]);
+}
+
+float getImporte()
+{
+    return rand()%50000-rand()%40000;
+}
+
+int getDia()
+{
+    return rand()%31+1;
+}
+
+int getMes()
+{
+    return rand()%12+1;
+}
+
+int getAnio()
+{
+    return rand()%203+1822;
+}
+
+stMovimientos getMovimientosRandom() ///funcion que carga y retorna un movimiento
+{
+    stMovimientos mov;
+    mov.importe=getImporte();
+    if (mov.importe>0)
+    {
+        getDetalle(mov.detalle);
+    }
+    else
+    {
+        getDetalleSaldoNegativo(mov.detalle);
+    }
+    mov.dia=getDia();
+    mov.mes=getMes();
+    mov.anio=getAnio();
+
+    return mov;
+}
+
+
+int cargaMovimientosRandomEnArchi(char nombreArchivoMov[],char nombreArchivoCuen[], int idCuenta)
+{
+    FILE *archi=fopen(nombreArchivoMov,"wb");
+    stMovimientos movimiento;
+    int cantidadMovimientos = 0;
+    char opcion=0;
+    int idMovimiento =  cuentaRegistros(nombreArchivoMov, sizeof(stMovimientos));
+    if (archi)
+    {
+        while(opcion!=ESC)
+
+        {
+            movimiento=getMovimientosRandom();
+            idMovimiento++;
+            movimiento.id=idMovimiento;
+            movimiento.eliminado=0;
+            movimiento.idCuenta=idCuenta;
+            muestraMovimiento(movimiento);
+            ///devuelve el nro de archivos que escribo
+            cantidadMovimientos = cantidadMovimientos + fwrite(&movimiento,sizeof(stMovimientos),1,archi);
+            actualizarSaldo2(nombreArchivoCuen, movimiento);
+            printf("Ingrese ESC para salir o cualquier otra tecla si desea agregar un nuevo movimiento:\n");
+            fflush(stdin);
+            opcion=getch();
+            system("cls");
+        }
+
+        fclose(archi);
+    }
+    return cantidadMovimientos;
+}
+int getIdCuentaRandom(char nombreArchivo[])
+{
+    int idCuenta;
+    stCuenta cuenta;
+    int cantidad=cuentaRegistros(nombreArchivo, sizeof(stCuenta));
+    FILE* archi=fopen(nombreArchivo, "rb");
+    if(archi)
+    {
+        do
+        {
+            fseek(archi,(rand()%cantidad)*sizeof(stCuenta),SEEK_SET);
+            fread(&cuenta,sizeof(stCuenta),1,archi);
+        }while(cuenta.eliminado==-1);
+        idCuenta=cuenta.id;
+        fclose(archi);
+    }
+    return idCuenta;
+}
+
+void cargaMilMovimientosRandomEnArchi(char nombreArchivoMov[], char nombreArchivoCuenta[])
+{
+    FILE *archi=fopen(nombreArchivoMov,"ab");
+    stMovimientos movimiento;
+    char opcion=0;
+    int idMovimiento =  cuentaRegistros(nombreArchivoMov, sizeof(stMovimientos));
+    if (archi)
+    {
+        for (int i=0; i<1000; i++)
+
+        {
+            movimiento=getMovimientosRandom();
+            idMovimiento++;
+            movimiento.id=idMovimiento;
+            movimiento.idCuenta=getIdCuentaRandom(nombreArchivoCuenta);
+            actualizarSaldo2(nombreArchivoCuenta, movimiento);
+            fwrite(&movimiento,sizeof(stMovimientos),1,archi);
+        }
+
+        fclose(archi);
+    }
+}
+
