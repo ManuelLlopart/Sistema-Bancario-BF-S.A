@@ -7,6 +7,8 @@
 #include "movimientos.h"
 #include "mock.h"
 #include "domicilio.h"
+#include "cuenta.h"
+
 const int ESC=27;
 
 void getName(char name [])
@@ -216,24 +218,14 @@ stMovimientos getMovimientosRandom() ///funcion que carga y retorna un movimient
     return mov;
 }
 
-void muestraMovimientoRandom(stMovimientos movimiento)
-{
-    printf("Id:%d\n",movimiento.id);
-    printf ("Detalle:%s\n",movimiento.detalle);
-    printf("Importe:%.2f\n",movimiento.importe);
-    printf("Dia:%d\n",movimiento.dia);
-    printf("Mes:%d\n",movimiento.mes);
-    printf("Anio:%d\n",movimiento.anio);
-    printf("\n====================================\n");
-}
 
-int cargaMovimientosRandomEnArchi(char nombreArchivo[])
+int cargaMovimientosRandomEnArchi(char nombreArchivoMov[],char nombreArchivoCuen[], int idCuenta)
 {
-    FILE *archi=fopen(nombreArchivo,"wb");
+    FILE *archi=fopen(nombreArchivoMov,"wb");
     stMovimientos movimiento;
     int cantidadMovimientos = 0;
     char opcion=0;
-    int idMovimiento =  cuentaRegistros(nombreArchivo, sizeof(stMovimientos));
+    int idMovimiento =  cuentaRegistros(nombreArchivoMov, sizeof(stMovimientos));
     if (archi)
     {
         while(opcion!=ESC)
@@ -242,9 +234,12 @@ int cargaMovimientosRandomEnArchi(char nombreArchivo[])
             movimiento=getMovimientosRandom();
             idMovimiento++;
             movimiento.id=idMovimiento;
-            muestraMovimientoRandom(movimiento);
+            movimiento.eliminado=0;
+            movimiento.idCuenta=idCuenta;
+            muestraMovimiento(movimiento);
             ///devuelve el nro de archivos que escribo
             cantidadMovimientos = cantidadMovimientos + fwrite(&movimiento,sizeof(stMovimientos),1,archi);
+            actualizarSaldo2(nombreArchivoCuen, movimiento);
             printf("Ingrese ESC para salir o cualquier otra tecla si desea agregar un nuevo movimiento:\n");
             fflush(stdin);
             opcion=getch();
@@ -265,7 +260,7 @@ void muestraVariosMovimientosRandom(char nombreArchivo[])
     {
         while(fread(&movimiento,sizeof(stMovimientos),1,archi)>0)
         {
-            muestraMovimientoRandom(movimiento);
+            muestraMovimiento(movimiento);
         }
 
         fclose(archi);

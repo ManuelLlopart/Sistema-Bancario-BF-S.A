@@ -132,7 +132,7 @@ void mostrarCuenta (stCuenta cuenta[],int validos) ///mostrar cuenta, sirve para
     }
 
 }
-void mostrarCuentaIndividual(stCuenta cuenta) {
+void mostrarCuentaIndividual(stCuenta cuenta) {///mostrar cuenta, sirve para consulta
     printf("\nID:................... %d",cuenta.id);
     printf("\nid del cliente:....... %d", cuenta.idCliente);
     printf("\nNumero de la cuenta:.. %d", cuenta.nroCuenta);
@@ -161,7 +161,7 @@ void muestraArchivoCuentas(char nombreArchivo[])
 ///mostrar listado de cuenta con archivos
 ///que busque por id la cuenta y muestre todas hasta las eliminadas. de una cuenta en especifica hasta las eliminadas
 
-int listadoCliente (char NombreArchivo[], int BuscarId)
+int cantidadCuentasCliente (char NombreArchivo[], int BuscarId)
 {
     FILE *archi = fopen(NombreArchivo, "rb");
     stCuenta cuenta;
@@ -171,14 +171,8 @@ int listadoCliente (char NombreArchivo[], int BuscarId)
         while (fread(&cuenta, sizeof(stCuenta), 1, archi) > 0) {
             if (cuenta.idCliente == BuscarId) {
                 numCuentasEncontradas++;
-                mostrarCuentaIndividual(cuenta);
             }
         }
-
-        if (numCuentasEncontradas == 0) {
-            printf("\nEl cliente no tiene ninguna cuenta activa.\n");
-        }
-
         fclose(archi);
     } else {
         printf("Error al abrir el archivo.\n");
@@ -290,8 +284,27 @@ int consultaCuenta(char NombreArchivo[], int BuscarId)
 }
 
 
-void actualizarSaldo(stCuenta *cuenta, float monto) { ///verlo o corregirlo
-    cuenta->saldo += monto;
+void actualizarSaldo2(char nombreArchivo[], stMovimientos mov)
+{
+    FILE* archi=fopen(nombreArchivo, "r+b");
+    stCuenta cuenta;
+    int flag=0;
+    if(archi)
+    {
+//        fseek(archi,0,SEEK_SET);
+        while(flag==0&&fread(&cuenta,sizeof(stCuenta),1,archi)>0)
+        {
+            if(cuenta.id==mov.idCuenta)
+            {
+                flag=1;
+                cuenta.saldo =cuenta.saldo+mov.importe;
+                fseek(archi,-sizeof(stCuenta),SEEK_CUR);
+                fwrite(&cuenta,sizeof(stCuenta),1,archi);
+
+            }
+        }
+        fclose(archi);
+    }
 }
 
 int tipoCuentas ()
@@ -320,45 +333,49 @@ stCuenta bajaCuenta(stCuenta cuenta)
 
 
 ///funcion de menu de opcion para modificacion de cuenta
-stCuenta modificarCuenta(stCuenta cuenta)
+int modificarCuenta()
 {
     int modificar = 0;
-
+    system("cls");
     printf("\nSeleccione el campo que desea modificar:");
-    printf("\n4 - Modificar número de cuenta");
-    printf("\n5 - Modificar tipo de cuenta");
-    printf("\n6 - Modificar costo mensual");
-    printf("\n7 - Modificar la cuenta entera");
-    printf("\n0 - Salir de la modificación\n");
-    printf("Seleccione una opción: ");
+    printf("\n1 - Modificar tipo de cuenta");
+    printf("\n2 - Modificar costo mensual");
+    printf("\n3 - Modificar la cuenta entera");
+    printf("\n0 - Salir de la modificacion\n");
+    printf("Seleccione una opcion: ");
     scanf("%d", &modificar);
 
-    cuenta = modificaPorSeccion(cuenta, modificar);
-    return cuenta;
+
+    return modificar;
 }
 
-stCuenta modificaPorSeccion (stCuenta cuenta,int modificar)
+stCuenta modificaPorSeccion (stCuenta cuenta)
 {
-    switch (modificar)
+    int flag=0;
+    while(flag==0)
     {
-    case 4:
-        printf("Ingrese nuevo número de cuenta: ");
-        scanf("%d", &cuenta.nroCuenta);
-        break;
-    case 5:
-        printf("Ingrese nuevo tipo de cuenta (1. Caja de Ahorro en Pesos, 2. Caja de Ahorro en Dólares, 3. Cta Cte en $): ");
+        switch (modificarCuenta())
+    {
+    case 1:
+        printf("Ingrese nuevo tipo de cuenta (1. Caja de Ahorro en Pesos, 2. Caja de Ahorro en Dolares, 3. Cta Cte en $): ");
         scanf("%d", &cuenta.tipoDeCuenta);
         break;
-    case 6:
+    case 2:
         printf("Ingrese nuevo costo mensual: ");
         scanf("%f", &cuenta.costoMensual);
         break;
-    case 7:
+    case 3:
         printf("Ingrese de nuevo todos los datos de la cuenta: ");
         cuenta = cargarCuentaIndividual (cuenta);
         break;
+    case 0:
+        printf("\n Saliendo de modificacion\n");
+        flag=1;
+        break;
     default:
-        printf("Opción no válida. Intente de nuevo.\n");
+        printf("Opcion no valida. Intente de nuevo.\n");
+        system("pause");
+    }
     }
 
     return cuenta;
@@ -366,17 +383,17 @@ stCuenta modificaPorSeccion (stCuenta cuenta,int modificar)
 
 ///hacer funcion que si el ususario tiene una caja de ahorro en pesos y doalres que elija cual quiere modificar
 
-int buscaPosCuentaPorId(char nombreArchivo[], int idBuscado,int tipoCuenta)
+int buscaPosCuentaPorId(char nombreArchivo[], int idBuscado,int nroCuenta)
 {
     FILE* archi = fopen(nombreArchivo, "rb");
     int flag = 0;
-    int pos = 0;
+    int pos = -1;
     stCuenta a;
     if(archi)
     {
         while(flag==0 && fread(&a, sizeof(stCuenta),1, archi)>0)
         {
-            if(a.idCliente==idBuscado && a.tipoDeCuenta)
+            if(a.idCliente==idBuscado && a.nroCuenta==nroCuenta)
             {
                 flag=1;
                 pos=ftell(archi)/sizeof(stCuenta)-1;
@@ -418,7 +435,6 @@ void reemplazaCuentaPos(char nombreArchivo[],stCuenta a, int pos)
         fseek(archi,pos* sizeof(stCuenta), SEEK_SET);
         fwrite(&a,sizeof(stCuenta),1, archi);
         fclose(archi);
-        printf("<<<%d>>>>",pos);
     }
 }
 
@@ -476,10 +492,54 @@ int muestraCuentaEspecificaEliminada(char NombreArchivo[], int BuscarId)
     return numCuentasEncontradas;
 }
 
-stCuenta activarCuenta (stCuenta cuenta)
+stCuenta altaCuenta (stCuenta cuenta)
 {
     cuenta.eliminado=0;
 
     return cuenta;
 }
 
+stCuenta buscaCuentaPorIdClienteNroCuenta(char nombreArchivo[], int idCliente, int nroCuenta)
+{
+    stCuenta cuenta;
+    int flag=0;
+    FILE* archi=fopen(nombreArchivo, "rb");
+    if(archi)
+    {
+        while(flag==0 && fread(&cuenta,sizeof(stCuenta),1,archi))
+        {
+
+            if(cuenta.idCliente==idCliente&&cuenta.nroCuenta==nroCuenta)
+            {
+                flag=1;
+            }
+        }
+        fclose(archi);
+    }
+    return cuenta;
+}
+
+void listadoCuentasPorCliente (char NombreArchivo[], int BuscarId)
+{
+    FILE *archi = fopen(NombreArchivo, "rb");
+    stCuenta cuenta;
+    int numCuentasEncontradas = 0;
+
+    if (archi) {
+        while (fread(&cuenta, sizeof(stCuenta), 1, archi) > 0) {
+            if (cuenta.idCliente == BuscarId) {
+                mostrarCuentaIndividual(cuenta);
+                numCuentasEncontradas++;
+            }
+        }
+
+        if (numCuentasEncontradas == 0) {
+            printf("\nEl cliente no tiene ninguna cuenta activa.\n");
+        }
+
+        fclose(archi);
+    } else {
+        printf("Error al abrir el archivo.\n");
+    }
+
+}

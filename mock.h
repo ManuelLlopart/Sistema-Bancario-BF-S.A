@@ -23,8 +23,7 @@ int getMes();
 int getAnio();
 stMovimientos getMovimientosRandom();
 void muestraMovimientoRandom(stMovimientos movimiento);
-int cargaMovimientosRandomEnArchi(char nombreArchivo[]);
-void muestraVariosMovimientosRandom(char nombreArchivo[]);
+int cargaMovimientosRandomEnArchi(char nombreArchivoMov[],char nombreArchivoCuen[], int idCuenta);
 void cargaMilMovimientosRandomEnArchi(char nombreArchivo[]);
 
 

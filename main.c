@@ -12,12 +12,18 @@
 
 #define AR_CLIENTES "clientes.dat"
 #define AR_CUENTAS "cuentas.dat"
+#define AR_MOVIMIENTOS "movimientos.dat"
+
 
 int menuPpal();
 int menuCliente();
-int menuBuscaCliente();
 void opcionesCliente();
-
+int menuBuscaCliente();
+void opcionesBuscaCliente(int pos);
+int menuCuenta();
+void opcionesCuenta();
+int menuCuentaElegida();
+void opcionesCuentaElegida(stCuenta cuenta);
 
 int selectOption(int cantOpciones);
 
@@ -45,7 +51,8 @@ int main()
             break;
 
         }
-    }while(fin==0);
+    }
+    while(fin==0);
 
 
 
@@ -73,13 +80,13 @@ int menuPpal()
     printf("================================", x, y);
     y=y+2;
     gotoxy(x,y);
-    printf("CLIENTES");
+    printf("Clientes");
     y=y+2;
     gotoxy(x,y);
-    printf("CUENTAS");
+    printf("Cuentas");
     y=y+2;
     gotoxy(x,y);
-    printf("SALIR");
+    printf("Salir");
     op=selectOption(3);
     return op;
 }
@@ -103,38 +110,45 @@ int selectOption(int cantOpciones)//Devuelve una opcion elegida
         switch(opcion)
         {
         case 72://arriba
-            if(y>3){
-                    y=y-2;
-                    gotoxy(x,y);
-                    printf("");
-                    elegido--;
-                }else{
-                    y=1+cantOpciones*2;
-                    gotoxy(x,y);
-                    printf("");
-                    elegido=cantOpciones;
-                }
+            if(y>3)
+            {
+                y=y-2;
+                gotoxy(x,y);
+                printf("");
+                elegido--;
+            }
+            else
+            {
+                y=1+cantOpciones*2;
+                gotoxy(x,y);
+                printf("");
+                elegido=cantOpciones;
+            }
 
-                break;
+            break;
         case 80://abajo
-            if(y<cantOpciones*2){
-                    y=y+2;
-                    gotoxy(x,y);
-                    printf("");
-                    elegido++;
-                }else{
-                    y=3;
-                    gotoxy(x,y);
-                    printf("");
-                    elegido=1;
-                }
+            if(y<cantOpciones*2)
+            {
+                y=y+2;
+                gotoxy(x,y);
+                printf("");
+                elegido++;
+            }
+            else
+            {
+                y=3;
+                gotoxy(x,y);
+                printf("");
+                elegido=1;
+            }
             break;
         case 13:
             fin=1;
             break;
 
         }
-    }while(fin==0);
+    }
+    while(fin==0);
     return elegido;
 }
 
@@ -190,7 +204,7 @@ void opcionesCliente()
     do
     {
         system("cls");
-         opcion=menuCliente();
+        opcion=menuCliente();
         switch(opcion)
         {
         case 1://Lista de cliente
@@ -219,17 +233,15 @@ void opcionesCliente()
             if(pos==-1)
             {
                 printf("\n El dni ingresado no corresponde a ningun cliente del sistema\n");
-            }else{
-            printf("\n Cliente encontrado: \n");
-            muestraClientePos(AR_CLIENTES,pos);
-            printf("\n Para modificar el cliente presione 1.\n ");
-            printf("Para crear una cuenta presione 2\n");
-            printf("Para volver al menu anterior presione cualquier tecla\n");
-            fflush(stdin);
-            modifica=getch();
-            opcionesClienteBuscado(modifica, pos);
+                system("pause");
             }
-            system("pause");
+            else
+            {
+                printf("\n Cliente encontrado: \n");
+                muestraClientePos(AR_CLIENTES,pos);
+                opcionesBuscaCliente(pos);
+            }
+
             break;
         case 5://cargar Cliente
             system("cls");
@@ -244,13 +256,13 @@ void opcionesCliente()
             fin=1;
             break;
         }
-    }while(fin==0);
+    }
+    while(fin==0);
 }
 
 
 int menuBuscaCliente()
 {
-    system("cls");
     color(6);
     int x;
     int y;
@@ -272,10 +284,10 @@ int menuBuscaCliente()
     printf("Ver cuentas del cliente");
     y=y+2;
     gotoxy(x,y);
-    printf("Dar alta cliente");
+    printf("Seleccionar cuenta");
     y=y+2;
     gotoxy(x,y);
-    printf("Dar baja cliente");
+    printf("Crear Cuenta");
     y=y+2;
     gotoxy(x,y);
     printf("Volver");
@@ -283,41 +295,79 @@ int menuBuscaCliente()
     return selectOption(5);
 }
 
-void opcionesBuscaCliente()
+void opcionesBuscaCliente(int pos)
 {
     int fin=0;
     int opcion;
+    int numCuentas=0;
+    int elegido;
+    int flag=0;
+    stCliente cliente=clientePos(AR_CLIENTES, pos);
+    stCuenta cuenta;
     do
     {
         system("cls");
-         opcion=menuBuscaCliente();
+        gotoxy(0, 10);
+        printf("\n Cliente encontrado: \n");
+        muestraCliente(cliente);
+        opcion=menuBuscaCliente();
+        numCuentas=cantidadCuentasCliente(AR_CUENTAS, cliente.id);//que no muestre los clientes
         switch(opcion)
         {
-        case 1://
-            listadoClientes(AR_CLIENTES);
+        case 1://Modificar
+            reemplazaClientePos(AR_CLIENTES,modificarCliente(clientePos(AR_CLIENTES, pos)), pos);
+            system("cls");
+            printf("\n Cliente modificado con exito\n");
+            break;
+        case 2://Ver Cuentas del cliente
+            system("cls");
+            listadoCuentasPorCliente(AR_CUENTAS, cliente.id);//que no devuelva nada
+            printf("\nEl cliente tiene %d cuentas\n", numCuentas);
+            system("pause");
+            break;
+        case 3://Seleccionar cuenta
+            if(numCuentas>0)
+            {
+            do
+            {
+                system("cls");
+                printf("\nIngrese el numero de cuenta a seleccionar\n");
+                scanf("%d", &elegido);
+                if(elegido<=numCuentas&&elegido>=1)
+                {
+                    flag=1;
+
+                }else{
+                printf("\n Error, la cuenta seleccionada no existe, intente nuevamente\n");
+                system("pause");
+                    }
+            }while(flag==0);
+            cuenta=buscaCuentaPorIdClienteNroCuenta(AR_CUENTAS,cliente.id, elegido); //funcion que devuelve cuenta buscada por idCliente y nro de cuenta
+            opcionesCuentaElegida(cuenta);
+            //Modificar cuenta
+            //dar de baja
+            //dar de alta
+            //Menu para movimientos
+            //Ver movimientos
+            //crear un movimiento
+            //crear movimiento random
             printf("\n");
             system("pause");
+            }else{
+            printf("\nEl cliente no posee ninguna cuenta\n");
+            }
             break;
-        case 2://Ver Clientes activos
-            printf("Lista de clientes activos:\n");
-            listadoClientesActivos(AR_CLIENTES);
-            system("pause");
-            break;
-        case 3://Ver Clientes inactivos
+        case 4://Cargar Cuenta
             system("cls");
-            printf("Lista de clientes inactivos:\n");
-            listadoClientesInactivos(AR_CLIENTES);
-            system("pause");
-            break;
-        case 4://Buscar Cliente
-
+            cargaCuenta(AR_CUENTAS, cliente);
             system("pause");
             break;
         case 5://salir
             fin=1;
             break;
         }
-    }while(fin==0);
+    }
+    while(fin==0);
 }
 
 int menuCuenta()
@@ -353,7 +403,7 @@ void opcionesCuenta()
     do
     {
         system("cls");
-         opcion=menuCuenta();
+        opcion=menuCuenta();
         switch(opcion)
         {
         case 1://Ver todas las cuentas
@@ -367,29 +417,113 @@ void opcionesCuenta()
             fin=1;
             break;
         }
-    }while(fin==0);
+    }
+    while(fin==0);
 }
 
-
-void opcionesClienteBuscado(int opcion, int pos)
+int menuCuentaElegida()
 {
-    int numCuentas=0;
-    stCliente cliente=clientePos(AR_CLIENTES, pos);
-    switch(opcion)
+
+    color(6);
+    int x;
+    int y;
+    int op;
+    getConsoleSize(&x, &y);//ancho y alto de consola
+    x=x/2;
+    y=0;//Centro de consola
+    x=x-17;//Mitad de caracteres del titulo
+    gotoxy(x,y);
+    printf("Sistema Bancario ""Bicicleta Facil"" ");
+    y++;
+    gotoxy(x,y);
+    printf("================================", x, y);
+    y=y+2;
+    gotoxy(x,y);
+    printf("Modificar cuenta");
+    y=y+2;
+    gotoxy(x,y);
+    printf("Dar de baja a la cuenta");
+    y=y+2;
+    gotoxy(x,y);
+    printf("Dar de alta a la cuenta");
+    y=y+2;
+    gotoxy(x,y);
+    printf("Ver movimientos");
+    y=y+2;
+    gotoxy(x,y);
+    printf("Crear movimiento");
+    y=y+2;
+    gotoxy(x,y);
+    printf("Crear movimiento random");
+    y=y+2;
+    gotoxy(x,y);
+    printf("Volver");
+
+    return selectOption(7);
+}
+
+void opcionesCuentaElegida(stCuenta cuenta)
+{
+
+    int fin=0;
+    int opcion;
+    int pos;
+    stMovimientos mov;
+    int cant=0;
+    pos=buscaPosCuentaPorId(AR_CUENTAS,cuenta.idCliente, cuenta.nroCuenta);
+    do
     {
-    case 49://modifica cliente
-
-                reemplazaClientePos(AR_CLIENTES,modificarCliente(clientePos(AR_CLIENTES, pos)), pos);
-                system("cls");
-                printf("\n Cliente modificado con exito\n");
-        break;
-    case 50://Crear Cuenta
-        cargaCuenta(AR_CUENTAS, cliente);
-        break;
-    case 51://Ver cuentas del cliente
-        numCuentas=listadoCliente(AR_CUENTAS, cliente.id);
-        printf("\n El cliente tiene %d cuentas\n", numCuentas);
-        break;
-
+        system("cls");
+        gotoxy(0,15);
+        printf("\nCuenta seleccionada:\n");
+        mostrarCuentaIndividual(cuentaPos(AR_CUENTAS,pos));
+        opcion=menuCuentaElegida();
+        switch(opcion)
+        {
+        case 1://Modificar cuenta
+            system("cls");
+            cuenta=modificaPorSeccion(cuenta);
+            reemplazaCuentaPos(AR_CUENTAS, cuenta, pos);
+            system("pause");
+            break;
+        case 2://dar de baja
+            system("cls");
+            cuenta=bajaCuenta(cuenta);
+            reemplazaCuentaPos(AR_CUENTAS, cuenta, pos);
+            printf("\nCuenta dada de baja exitosamente\n");
+            system("pause");
+            break;
+        case 3://dar de alta
+            system("cls");
+            cuenta=altaCuenta(cuenta);
+            reemplazaCuentaPos(AR_CUENTAS, cuenta, pos);
+            printf("\nCuenta dada de alta exitosamente\n");
+            system("pause");
+            break;
+        case 4://Ver movimientos
+            system("cls");
+            listadoMovimientosPorIdCuenta(AR_MOVIMIENTOS, cuenta.id);
+            printf("\n");
+            system("pause");
+            break;
+        case 5://crear movimiento
+            system("cls");
+            mov=crearMovimiento(cuenta.id);
+            guardaMovimientoEnArchi(AR_MOVIMIENTOS, mov);
+            muestraMovimiento(mov);
+            actualizarSaldo2(AR_CUENTAS,mov);
+            printf("\nMovimiento cargado correctamente\n");
+            system("pause");
+            break;
+        case 6://Crear movimiento random
+            system("cls");
+            cant=cargaMovimientosRandomEnArchi(AR_MOVIMIENTOS,AR_CUENTAS,cuenta.id);
+            printf("\n Se cargaron %d movimientos\n", cant);
+            break;
+        case 7://salir
+            fin=1;
+            break;
+        }
     }
+    while(fin==0);
 }
