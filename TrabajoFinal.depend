@@ -1,22 +1,28 @@
 # depslib dependency file v1.0
-1718835203 source:c:\users\pc\desktop\trabajo final\cliente.c
+1719268407 source:c:\users\pc\desktop\trabajo final\cliente.c
 	<stdio.h>
 	<stdlib.h>
 	<conio.h>
+	"domicilio.h"
 	<string.h>
 	"cliente.h"
 	"mock.h"
 
-1718832934 c:\users\pc\desktop\trabajo final\cliente.h
+1719267582 c:\users\pc\desktop\trabajo final\cliente.h
+	"domicilio.h"
 
-1718833671 source:c:\users\pc\desktop\trabajo final\main.c
+1719268111 source:c:\users\pc\desktop\trabajo final\main.c
 	<stdio.h>
 	<stdlib.h>
 	<conio.h>
 	<time.h>
 	<string.h>
+	"domicilio.h"
 	"cliente.h"
 	"mock.h"
+	"gotoxy.h"
+	"cuenta.h"
+	"movimientos.h"
 
 1719263572 source:c:\users\manu_\desktop\sistema bancario\main.c
 	<stdio.h>
@@ -43,16 +49,21 @@
 	"cliente.h"
 	"mock.h"
 
-1718061168 c:\users\pc\desktop\trabajo final\mock.h
+1719267582 c:\users\pc\desktop\trabajo final\mock.h
+	"movimientos.h"
+	"cliente.h"
 
-1718140427 source:c:\users\pc\desktop\trabajo final\mock.c
+1719267582 source:c:\users\pc\desktop\trabajo final\mock.c
 	<stdio.h>
 	<stdlib.h>
 	<conio.h>
 	<time.h>
 	<string.h>
 	"cliente.h"
+	"movimientos.h"
 	"mock.h"
+	"domicilio.h"
+	"cuenta.h"
 
 1719260367 source:c:\users\manu_\desktop\sistema bancario\mock.c
 	<stdio.h>
@@ -70,14 +81,17 @@
 	"movimientos.h"
 	"cliente.h"
 
-1718062365 source:c:\users\pc\desktop\trabajo final\cuenta.c
+1719267582 source:c:\users\pc\desktop\trabajo final\cuenta.c
 	<stdio.h>
 	<stdlib.h>
 	<conio.h>
 	<string.h>
 	"cuenta.h"
+	"cliente.h"
 
-1718062365 c:\users\pc\desktop\trabajo final\cuenta.h
+1719267582 c:\users\pc\desktop\trabajo final\cuenta.h
+	"cliente.h"
+	"movimientos.h"
 
 1719261351 source:c:\users\manu_\desktop\sistema bancario\cuenta.c
 	<stdio.h>
@@ -111,6 +125,33 @@
 1719263572 c:\users\manu_\desktop\sistema bancario\movimientos.h
 
 1719263572 source:c:\users\manu_\desktop\sistema bancario\movimientos.c
+	<stdio.h>
+	<stdlib.h>
+	<conio.h>
+	"movimientos.h"
+	"mock.h"
+	<string.h>
+
+1719267582 c:\users\pc\desktop\trabajo final\domicilio.h
+
+1719267582 c:\users\pc\desktop\trabajo final\movimientos.h
+
+1719267582 source:c:\users\pc\desktop\trabajo final\domicilio.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"domicilio.h"
+	"cliente.h"
+	"mock.h"
+
+1719267582 source:c:\users\pc\desktop\trabajo final\gotoxy.c
+	<stdio.h>
+	<stdlib.h>
+	<windows.h>
+
+1719267582 c:\users\pc\desktop\trabajo final\gotoxy.h
+
+1719269247 source:c:\users\pc\desktop\trabajo final\movimientos.c
 	<stdio.h>
 	<stdlib.h>
 	<conio.h>

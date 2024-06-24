@@ -275,6 +275,7 @@ int buscaPosClientePorId(char nombreArchivo[], int idBuscado)
 
 int menuModif()
 {
+    system("cls");
     int opcion;
     printf("\n Ingrese 1 para cambiar nombre");
     printf("\n Ingrese 2 para cambiar apellido");

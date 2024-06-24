@@ -321,6 +321,7 @@ void opcionesBuscaCliente(int pos)
         switch(opcion)
         {
         case 1://Modificar
+            system("cls");
             reemplazaClientePos(AR_CLIENTES,modificarCliente(clientePos(AR_CLIENTES, pos)), pos);
             system("cls");
             printf("\n Cliente modificado con exito\n");
@@ -470,13 +471,17 @@ int menuMovimiento()
     printf("Cargar mil movimientos random");
     y=y+2;
     gotoxy(x,y);
+    printf("Buscar movimiento por fecha");
+    y=y+2;
+    gotoxy(x,y);
     printf("Salir");
 
-    return selectOption(3);
+    return selectOption(4);
 
 }
 void opcionesMovimientos()
 {
+    stMovimientos mov;
     int opcion;
     int fin=0;
     do
@@ -495,7 +500,14 @@ void opcionesMovimientos()
             printf("\nSe cargaron mil movimientos\n");
             system("pause");
             break;
-        case 3://salir
+        case 3:
+            system("cls");
+            mov=cargaFechaMovimiento(mov);
+            printf("Movimientos correspondientes al dia %d/%d/%d:\n",mov.dia,mov.mes,mov.anio);
+            buscaMovimientosPorFecha(AR_MOVIMIENTOS,mov.dia,mov.mes,mov.anio);
+            system("pause");
+            break;
+        case 4://salir
             fin=1;
             break;
 
@@ -563,6 +575,7 @@ void opcionesCuentaElegida(stCuenta cuenta)
     int idMov;
     stMovimientos mov;
     int cant=0;
+    int cantMov=0;
     pos=buscaPosCuentaPorId(AR_CUENTAS,cuenta.idCliente, cuenta.nroCuenta);
     do
     {
