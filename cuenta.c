@@ -67,7 +67,7 @@ stCuenta cargarCuentaIndividual (stCuenta cuenta)
 {
 
 
-    printf("\nIngrese el tipo de cuenta (1. Caja de Ahorro en Pesos, 2. Caja de Ahorro en Dólares, 3. Cta Cte en $)");
+    printf("\nIngrese el tipo de cuenta (1. Caja de Ahorro en Pesos, 2. Caja de Ahorro en Dolares, 3. Cta Cte en $)");
     scanf("%d",&cuenta.tipoDeCuenta);
     printf("\nIngrese el costo mensual: ");
     scanf("%f",&cuenta.costoMensual);
@@ -201,7 +201,7 @@ int cuentaCuentasCliente (char NombreArchivo[], int BuscarId)
     return numCuentasEncontradas;
 }
 
-int mostrarTodasLasCuentasActivas (char NombreArchivo[], int BuscarId)
+int mostrarTodasLasCuentasActivas (char NombreArchivo[])
 {
     FILE *archi = fopen(NombreArchivo, "rb");
     stCuenta cuenta;
@@ -211,13 +211,8 @@ int mostrarTodasLasCuentasActivas (char NombreArchivo[], int BuscarId)
         while (fread(&cuenta, sizeof(stCuenta), 1, archi) > 0) {
             if (cuenta.eliminado == 0) {
                 numCuentasEncontradas++;
-                printf("\nOpcion: %d\n", numCuentasEncontradas);
                 mostrarCuentaIndividual(cuenta);
             }
-        }
-
-        if (numCuentasEncontradas == 0) {
-            printf("\nEl cliente no tiene ninguna cuenta activa.\n");
         }
 
         fclose(archi);
@@ -228,7 +223,7 @@ int mostrarTodasLasCuentasActivas (char NombreArchivo[], int BuscarId)
     return numCuentasEncontradas;
 }
 
-int mostrarTodasLasCuentasInactivas (char NombreArchivo[], int BuscarId)
+int mostrarTodasLasCuentasInactivas (char NombreArchivo[])
 {
     FILE *archi = fopen(NombreArchivo, "rb");
     stCuenta cuenta;
@@ -238,13 +233,8 @@ int mostrarTodasLasCuentasInactivas (char NombreArchivo[], int BuscarId)
         while (fread(&cuenta, sizeof(stCuenta), 1, archi) > 0) {
             if (cuenta.eliminado == -1) {
                 numCuentasEncontradas++;
-                printf("\nOpcion: %d\n", numCuentasEncontradas);
                 mostrarCuentaIndividual(cuenta);
             }
-        }
-
-        if (numCuentasEncontradas == 0) {
-            printf("\nEl cliente no tiene ninguna cuenta activa.\n");
         }
 
         fclose(archi);

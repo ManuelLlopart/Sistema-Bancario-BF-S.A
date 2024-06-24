@@ -28,5 +28,6 @@ void buscaMovimientosPorFecha(char nombreArchivo[],int diaBuscado,int mesBuscado
 int muestraMovimientosPorIdCuenta(char nombreArchivo[], int idCuenta);
 int posMovimiento(char nombreArchivo[],int idCuenta,int idMovimiento);
 int cuentaRegistros(char nombreArchivo[],int sizeEstructura);
+void muestraVariosMovimientos(char nombreArchivo[]);
 
 #endif // MOVIMIENTOS_H_INCLUDED

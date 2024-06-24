@@ -405,3 +405,19 @@ int cuentaRegistros(char nombreArchivo[],int sizeEstructura)
     }
     return cantidadRegistros;
 }
+
+void muestraVariosMovimientos(char nombreArchivo[])
+{
+    FILE *archi=fopen(nombreArchivo,"rb");
+    stMovimientos movimiento;
+
+    if (archi)
+    {
+        while(fread(&movimiento,sizeof(stMovimientos),1,archi)>0)
+        {
+            muestraMovimiento(movimiento);
+        }
+
+        fclose(archi);
+    }
+}

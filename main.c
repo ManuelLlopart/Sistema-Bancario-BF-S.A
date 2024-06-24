@@ -46,7 +46,10 @@ int main()
         case 2://cuenta
             opcionesCuenta();
             break;
-        case 3://salir
+        case 3://movimiento
+            opcionesMovimientos();
+            break;
+        case 4://salir
             fin=1;
             break;
 
@@ -86,8 +89,11 @@ int menuPpal()
     printf("Cuentas");
     y=y+2;
     gotoxy(x,y);
+    printf("Movimientos");
+    y=y+2;
+    gotoxy(x,y);
     printf("Salir");
-    op=selectOption(3);
+    op=selectOption(4);
     return op;
 }
 
@@ -391,15 +397,22 @@ int menuCuenta()
     printf("Ver todas las cuentas");
     y=y+2;
     gotoxy(x,y);
+    printf("Ver las cuentas activas");
+    y=y+2;
+    gotoxy(x,y);
+    printf("Ver las cuentas inactivas");
+    y=y+2;
+    gotoxy(x,y);
     printf("Salir");
 
-    return selectOption(2);
+    return selectOption(4);
 
 }
 void opcionesCuenta()
 {
     int fin=0;
     int opcion;
+    int cant=0;
     do
     {
         system("cls");
@@ -412,13 +425,86 @@ void opcionesCuenta()
             printf("\n");
             system("pause");
             break;
+        case 2://Ver las cuentas activas
+            system("cls");
+            cant=mostrarTodasLasCuentasActivas(AR_CUENTAS);
+            printf("\n Hay %d cuentas activas\n", cant);
+            system("pause");
+            break;
+        case 3://Ver las cuentas inactivas
+            system("cls");
+            cant=mostrarTodasLasCuentasInactivas(AR_CUENTAS);
+            printf("\n Hay %d cuentas activas\n", cant);
+            system("pause");
+            break;
 
-        case 2://salir
+        case 4://salir
             fin=1;
             break;
         }
     }
     while(fin==0);
+}
+
+int menuMovimiento()
+{
+    system("cls");
+    color(6);
+    int x;
+    int y;
+    int op;
+    getConsoleSize(&x, &y);//ancho y alto de consola
+    x=x/2;
+    y=0;//Centro de consola
+    x=x-17;//Mitad de caracteres del titulo
+    gotoxy(x,y);
+    printf("Sistema Bancario ""Bicicleta Facil"" ");
+    y++;
+    gotoxy(x,y);
+    printf("================================", x, y);
+    y=y+2;
+    gotoxy(x,y);
+    printf("Ver todos los movimientos");
+    y=y+2;
+    gotoxy(x,y);
+    printf("Cargar mil movimientos random");
+    y=y+2;
+    gotoxy(x,y);
+    printf("Salir");
+
+    return selectOption(3);
+
+}
+void opcionesMovimientos()
+{
+    int opcion;
+    int fin=0;
+    do
+    {
+        opcion=menuMovimiento();
+        switch(opcion)
+        {
+        case 1://Ver todos los mov
+            system("cls");
+            muestraVariosMovimientos(AR_MOVIMIENTOS);
+            system("pause");
+            break;
+        case 2://cargar mil mov
+            system("cls");
+            cargaMilMovimientosRandomEnArchi(AR_MOVIMIENTOS,AR_CUENTAS);
+            printf("\nSe cargaron mil movimientos\n");
+            system("pause");
+            break;
+        case 3://salir
+            fin=1;
+            break;
+
+        }
+    }
+    while(fin==0);
+
+
+
 }
 
 int menuCuentaElegida()

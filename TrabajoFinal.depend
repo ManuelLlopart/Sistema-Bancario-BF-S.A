@@ -18,7 +18,7 @@
 	"cliente.h"
 	"mock.h"
 
-1719254055 source:c:\users\manu_\desktop\sistema bancario\main.c
+1719258276 source:c:\users\manu_\desktop\sistema bancario\main.c
 	<stdio.h>
 	<stdlib.h>
 	<conio.h>
@@ -54,7 +54,7 @@
 	"cliente.h"
 	"mock.h"
 
-1719253413 source:c:\users\manu_\desktop\sistema bancario\mock.c
+1719260367 source:c:\users\manu_\desktop\sistema bancario\mock.c
 	<stdio.h>
 	<stdlib.h>
 	<conio.h>
@@ -66,7 +66,7 @@
 	"domicilio.h"
 	"cuenta.h"
 
-1719253413 c:\users\manu_\desktop\sistema bancario\mock.h
+1719258326 c:\users\manu_\desktop\sistema bancario\mock.h
 	"movimientos.h"
 	"cliente.h"
 
@@ -79,7 +79,7 @@
 
 1718062365 c:\users\pc\desktop\trabajo final\cuenta.h
 
-1719254055 source:c:\users\manu_\desktop\sistema bancario\cuenta.c
+1719258926 source:c:\users\manu_\desktop\sistema bancario\cuenta.c
 	<stdio.h>
 	<stdlib.h>
 	<conio.h>
@@ -87,7 +87,7 @@
 	"cuenta.h"
 	"cliente.h"
 
-1719255395 c:\users\manu_\desktop\sistema bancario\cuenta.h
+1719261351 c:\users\manu_\desktop\sistema bancario\cuenta.h
 	"cliente.h"
 	"movimientos.h"
 
@@ -108,9 +108,9 @@
 
 1719171645 c:\users\manu_\desktop\sistema bancario\domicilio.h
 
-1719249715 c:\users\manu_\desktop\sistema bancario\movimientos.h
+1719257236 c:\users\manu_\desktop\sistema bancario\movimientos.h
 
-1719253674 source:c:\users\manu_\desktop\sistema bancario\movimientos.c
+1719257236 source:c:\users\manu_\desktop\sistema bancario\movimientos.c
 	<stdio.h>
 	<stdlib.h>
 	<conio.h>

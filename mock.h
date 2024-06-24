@@ -22,9 +22,9 @@ int getDia();
 int getMes();
 int getAnio();
 stMovimientos getMovimientosRandom();
-void muestraMovimientoRandom(stMovimientos movimiento);
+int getIdCuentaRandom(char nombreArchivo[]);
 int cargaMovimientosRandomEnArchi(char nombreArchivoMov[],char nombreArchivoCuen[], int idCuenta);
-void cargaMilMovimientosRandomEnArchi(char nombreArchivo[]);
+void cargaMilMovimientosRandomEnArchi(char nombreArchivoMov[], char nombreArchivoCuenta[]);
 
 
 #endif // MOCK_H_INCLUDED

@@ -250,28 +250,31 @@ int cargaMovimientosRandomEnArchi(char nombreArchivoMov[],char nombreArchivoCuen
     }
     return cantidadMovimientos;
 }
-
-void muestraVariosMovimientosRandom(char nombreArchivo[])
+int getIdCuentaRandom(char nombreArchivo[])
 {
-    FILE *archi=fopen(nombreArchivo,"rb");
-    stMovimientos movimiento;
-
-    if (archi)
+    int idCuenta;
+    stCuenta cuenta;
+    int cantidad=cuentaRegistros(nombreArchivo, sizeof(stCuenta));
+    FILE* archi=fopen(nombreArchivo, "rb");
+    if(archi)
     {
-        while(fread(&movimiento,sizeof(stMovimientos),1,archi)>0)
+        do
         {
-            muestraMovimiento(movimiento);
-        }
-
+            fseek(archi,(rand()%cantidad)*sizeof(stCuenta),SEEK_SET);
+            fread(&cuenta,sizeof(stCuenta),1,archi);
+        }while(cuenta.eliminado==-1);
+        idCuenta=cuenta.id;
         fclose(archi);
     }
+    return idCuenta;
 }
-void cargaMilMovimientosRandomEnArchi(char nombreArchivo[])
+
+void cargaMilMovimientosRandomEnArchi(char nombreArchivoMov[], char nombreArchivoCuenta[])
 {
-    FILE *archi=fopen(nombreArchivo,"wb");
+    FILE *archi=fopen(nombreArchivoMov,"ab");
     stMovimientos movimiento;
     char opcion=0;
-    int idMovimiento =  cuentaRegistros(nombreArchivo, sizeof(stMovimientos));
+    int idMovimiento =  cuentaRegistros(nombreArchivoMov, sizeof(stMovimientos));
     if (archi)
     {
         for (int i=0; i<1000; i++)
@@ -280,6 +283,8 @@ void cargaMilMovimientosRandomEnArchi(char nombreArchivo[])
             movimiento=getMovimientosRandom();
             idMovimiento++;
             movimiento.id=idMovimiento;
+            movimiento.idCuenta=getIdCuentaRandom(nombreArchivoCuenta);
+            actualizarSaldo2(nombreArchivoCuenta, movimiento);
             fwrite(&movimiento,sizeof(stMovimientos),1,archi);
         }
 
