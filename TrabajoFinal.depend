@@ -11,7 +11,7 @@
 1719267582 c:\users\pc\desktop\trabajo final\cliente.h
 	"domicilio.h"
 
-1719268111 source:c:\users\pc\desktop\trabajo final\main.c
+1719274556 source:c:\users\pc\desktop\trabajo final\main.c
 	<stdio.h>
 	<stdlib.h>
 	<conio.h>
@@ -134,7 +134,7 @@
 
 1719267582 c:\users\pc\desktop\trabajo final\domicilio.h
 
-1719267582 c:\users\pc\desktop\trabajo final\movimientos.h
+1719274556 c:\users\pc\desktop\trabajo final\movimientos.h
 
 1719267582 source:c:\users\pc\desktop\trabajo final\domicilio.c
 	<stdio.h>
@@ -151,11 +151,12 @@
 
 1719267582 c:\users\pc\desktop\trabajo final\gotoxy.h
 
-1719269247 source:c:\users\pc\desktop\trabajo final\movimientos.c
+1719274597 source:c:\users\pc\desktop\trabajo final\movimientos.c
 	<stdio.h>
 	<stdlib.h>
 	<conio.h>
 	"movimientos.h"
 	"mock.h"
 	<string.h>
+	<time.h>
 

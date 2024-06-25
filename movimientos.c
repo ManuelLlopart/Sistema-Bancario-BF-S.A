@@ -4,6 +4,7 @@
 #include "movimientos.h"
 #include "mock.h"
 #include <string.h>
+#include <time.h>
 
 const int DIM=100;
 
@@ -453,3 +454,31 @@ void muestraVariosMovimientos(char nombreArchivo[])
         fclose(archi);
     }
 }
+
+stMovimientos fechaActualModificacionMov(stMovimientos mov)
+{
+    time_t tiempoActual;
+    struct tm *infoTiempo;
+    int dia, mes, anio;
+
+    // Obtener el tiempo actual del sistema
+    tiempoActual = time(NULL);
+
+    // Convertir el tiempo a una estructura tm local
+    infoTiempo = localtime(&tiempoActual);
+
+    // Obtener d a, mes y a o
+    dia = infoTiempo->tm_mday;     // D a del mes (1 a 31)
+    mes = infoTiempo->tm_mon + 1;  // Mes (0 a 11, por eso sumamos 1)
+    anio = infoTiempo->tm_year + 1900; // A o desde 1900
+
+    // Mostrar la fecha por consola
+    printf("Fecha de ultima modificacion: %d/%d/%d\n", dia, mes, anio);
+    system("pause");
+    mov.dia=dia;
+    mov.mes=mes;
+    mov.anio=anio;
+
+    return mov;
+}
+

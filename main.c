@@ -561,14 +561,20 @@ int menuCuentaElegida()
     printf("Dar de baja un movimiento");
     y=y+2;
     gotoxy(x,y);
+    printf("Modificar movimiento");
+    y=y+2;
+    gotoxy(x,y);
     printf("Volver");
 
-    return selectOption(9);
+    return selectOption(10);
 }
 
 void opcionesCuentaElegida(stCuenta cuenta)
 {
-
+    int idMovAModificar=0;
+    int posMov=0;
+    float importeMov=0;
+    char detalleMov[50];
     int fin=0;
     int opcion;
     int pos;
@@ -580,7 +586,7 @@ void opcionesCuentaElegida(stCuenta cuenta)
     do
     {
         system("cls");
-        gotoxy(0,15);
+        gotoxy(0,18);
         printf("\nCuenta seleccionada:\n");
         mostrarCuentaIndividual(cuentaPos(AR_CUENTAS,pos));
         opcion=menuCuentaElegida();
@@ -652,7 +658,30 @@ void opcionesCuentaElegida(stCuenta cuenta)
             }
             system("pause");
             break;
-        case 9://salir
+        case 9://Modifica movimiento
+            system("cls");
+            printf("\nIngrese el id del movimiento a modificar:");
+            scanf("%d",&idMovAModificar);
+            posMov=posMovimiento(AR_MOVIMIENTOS, cuenta.id, idMovAModificar);
+            if (posMov==-1)
+                {
+                    printf("El id ingresado es incorrecto. Intente nuevamente..\n");
+                }
+                else
+                {
+                    printf("\nIngrese el detalle del movimiento a modificar: ");
+                    fflush(stdin);
+                    gets(detalleMov);
+                    printf("Ingrese el importe del movimiento a modificar:");
+                    fflush(stdin);
+                    scanf("%f",&importeMov);
+                    mov=fechaActualModificacionMov(mov);
+                    mov=modificaMovimiento(AR_MOVIMIENTOS,posMov,detalleMov,importeMov,mov.dia,mov.mes,mov.anio);
+                    muestraMovimiento(mov);
+                }
+
+            break;
+        case 10://salir
             fin=1;
             break;
         }
