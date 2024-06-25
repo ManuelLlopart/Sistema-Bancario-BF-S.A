@@ -666,6 +666,7 @@ void opcionesCuentaElegida(stCuenta cuenta)
             if (posMov==-1)
                 {
                     printf("El id ingresado es incorrecto. Intente nuevamente..\n");
+                    system("pause");
                 }
                 else
                 {
